@@ -63,13 +63,13 @@
     opacity:0;visibility:hidden;pointer-events:none;
   }
   .ignition.zooming{
-    transform:scale(1.15) translateZ(0);
+    transform:scale(1.1) translateZ(0);
     opacity:0;
-    transition:transform 0.9s cubic-bezier(0.4,0,0,1), opacity 0.7s cubic-bezier(0.4,0,0,1) 0.2s, visibility 0s linear 1s;
+    transition:transform 1.8s cubic-bezier(0.25,0.46,0.45,0.94), opacity 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.5s, visibility 0s linear 1.8s;
     will-change:transform, opacity;
   }
   .ignition.zooming.gone{
-    opacity:0;transform:scale(1.3) translateZ(0);
+    opacity:0;transform:scale(1.2) translateZ(0);
   }
 
   .ignition .vignette{
@@ -371,7 +371,7 @@
      =========================================================== */
   main{
     position:relative;z-index:10;
-    opacity:0;transition:opacity 1s cubic-bezier(0.4,0,0,1) 0.2s;
+    opacity:0;transition:opacity 1.4s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s;
     will-change:opacity;
   }
   main.revealed{opacity:1}
@@ -1341,14 +1341,18 @@
     keyBtn.classList.add('turning');
     playIgnitionSfx();
 
-    // Instant: music + zoom + flash all at once
+    // Music + zoom begin
     setTimeout(() => {
       startMusic();
       ignition.classList.add('zooming');
-      flash.classList.add('on');
-    }, skipDelay ? 0 : 200);
+    }, skipDelay ? 0 : 250);
 
-    // Reveal site
+    // Soft flash
+    setTimeout(() => {
+      flash.classList.add('on');
+    }, skipDelay ? 150 : 800);
+
+    // Reveal
     setTimeout(() => {
       ignition.classList.add('gone');
       flash.classList.remove('on');
@@ -1358,7 +1362,7 @@
       particles.classList.add('shown');
       startParticles();
       observeReveals();
-    }, skipDelay ? 300 : 1000);
+    }, skipDelay ? 400 : 1500);
   }
 
   keyBtn.addEventListener('click', () => reveal(false));
