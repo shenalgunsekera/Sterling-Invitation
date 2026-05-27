@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process \"c:\\\\Users\\\\MSI\\\\Downloads\\\\Invitation\\\\Invitation.html\")",
+      "PowerShell(Rename-Item -Path \"C:\\\\Users\\\\MSI\\\\Downloads\\\\Invitation\\\\Car ,mobile view.png\" -NewName \"Car-mobile-view.png\")",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git mv *)",
+      "Bash(git reset *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "PowerShell(Start-Process \"c:\\\\Users\\\\MSI\\\\Downloads\\\\Invitation\\\\index.html\")"
+    ]
+  }
+}
