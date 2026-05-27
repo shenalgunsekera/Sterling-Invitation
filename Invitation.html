@@ -1,0 +1,1684 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Sterling · Electric Reveal — 18 June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="Car silloete.png" />
+<link rel="preload" as="image" href="Car-mobile-view.png" />
+<link rel="preload" as="image" href="Hero Section image.png" />
+
+<style>
+  :root{
+    --bg:        #050505;
+    --bg-deep:   #020202;
+    --ink:       #f5f3ee;
+    --ink-soft:  rgba(245,243,238,0.62);
+    --ink-faint: rgba(245,243,238,0.32);
+    --line:      rgba(245,243,238,0.10);
+    --line-soft: rgba(245,243,238,0.05);
+    --beam:      oklch(0.94 0.09 82);
+    --beam-warm: oklch(0.86 0.11 70);
+    --spark:     oklch(0.80 0.13 215);
+    --ember:     oklch(0.65 0.18 30);
+
+    /* Per-section tonal backgrounds — all stay premium-dark, but vary in hue */
+    --sec-hero:      #050505;   /* pure black */
+    --sec-count:     #07090d;   /* cool blue-black */
+    --sec-about:     #0c0a08;   /* warm espresso */
+    --sec-evening:   #f4f0e6;   /* cream — contrast break */
+    --sec-venue:     #060912;   /* deep navy */
+    --sec-rsvp:      #0d0907;   /* warm amber-black */
+
+    --display: "Cormorant Garamond", "Times New Roman", serif;
+    --body:    "Manrope", system-ui, sans-serif;
+    --mono:    "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{overflow-x:hidden}
+  body:has(.ignition:not(.gone)){overflow:hidden}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--beam);color:#111}
+
+  /* ===========================================================
+     IGNITION OVERLAY
+     =========================================================== */
+  .ignition{
+    position:fixed;inset:0;z-index:200;
+    background:#0a0a0a;
+    display:grid;place-items:center;
+    transition:opacity 1.4s ease 0.4s, visibility 0s linear 1.8s;
+    overflow:hidden;
+  }
+  .ignition.gone{
+    opacity:0;visibility:hidden;pointer-events:none;
+  }
+  .ignition.zooming{
+    transform:scale(1.15);
+    filter:brightness(1.8);
+    transition:transform 1.2s cubic-bezier(0.4,0,0.2,1), filter 0.8s ease, opacity 1.2s ease 0.4s, visibility 0s linear 1.6s;
+  }
+  .ignition.zooming.gone{
+    opacity:0;transform:scale(1.3);filter:brightness(2.5);
+  }
+
+  .ignition .vignette{
+    position:absolute;inset:0;z-index:1;
+    background:radial-gradient(circle at 50% 55%, transparent 15%, rgba(10,10,10,0.6) 60%);
+    pointer-events:none;
+  }
+
+  /* Faint car silhouette emerging from the dark behind the key */
+  /* Car image — full bleed, covers entire ignition background */
+  .ignition .car-image{
+    position:absolute;inset:0;
+    pointer-events:none;
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .ignition .car-image img{
+    width:100%;height:100%;display:block;
+    object-fit:cover;
+    object-position:center bottom;
+  }
+
+  @media (max-width:700px){
+    .ignition .car-image{inset:0}
+    .ignition .car-image img{object-position:center 40%}
+    .ign-stack{margin-top:0;gap:32px;padding:0 24px}
+    .ign-eyebrow{font-size:8.5px;letter-spacing:0.4em}
+    .ign-title{font-size:24px}
+    .key-btn{width:160px;height:160px}
+    .key-btn .core{width:110px;height:110px}
+    .key-btn .glyph{width:52px;height:52px}
+    .key-btn .glyph svg{width:34px;height:34px}
+    .key-btn .label{bottom:26px;font-size:5.5px;letter-spacing:0.4em}
+    .key-btn .ring{border-width:1px}
+    .key-btn .ring.r2{inset:-16px}
+    .key-btn .ring.r3{inset:-32px}
+    .ign-hint{font-size:8.5px;letter-spacing:0.3em}
+    .skip{top:12px;right:12px;font-size:7.5px;padding:6px 10px}
+  }
+
+  /* Scan line removed per design feedback. */
+
+
+  .ign-stack{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:48px;
+    text-align:center;
+    margin-top:-8vh;
+  }
+
+  .ign-eyebrow{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.55em;
+    color:var(--ink-faint);text-transform:uppercase;
+    padding-left:0.55em;
+  }
+  .ign-eyebrow .dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:var(--beam);box-shadow:0 0 12px var(--beam);
+    margin-right:14px;vertical-align:1px;
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:0.4;transform:scale(1)}
+    50%{opacity:1;transform:scale(1.15)}
+  }
+
+  .ign-title{
+    font-family:var(--display);font-weight:300;font-style:italic;
+    font-size:clamp(28px,4vw,46px);
+    color:var(--ink);letter-spacing:0.01em;
+    line-height:1;
+  }
+  .ign-title em{font-style:normal;color:var(--beam);font-weight:400}
+
+  /* Key button — premium automotive Engine Start / Stop push button */
+  .key-btn{
+    position:relative;
+    width:220px;height:220px;border:0;background:transparent;cursor:pointer;
+    display:grid;place-items:center;
+    color:var(--ink);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .key-btn .ring{
+    position:absolute;inset:0;border-radius:50%;
+    border:1.5px solid rgba(245,243,238,0.12);
+    transition:transform .6s ease, border-color .6s ease, box-shadow .6s ease;
+  }
+  .key-btn .ring.r2{inset:-26px;border-color:rgba(245,243,238,0.06);animation:halo 6s linear infinite}
+  .key-btn .ring.r3{inset:-52px;border-color:rgba(245,243,238,0.03);animation:halo 8s linear infinite reverse}
+  @keyframes halo{
+    0%{transform:rotate(0deg)}
+    100%{transform:rotate(360deg)}
+  }
+  /* Chrome bezel — outer metallic ring */
+  .key-btn .core{
+    position:relative;width:150px;height:150px;border-radius:50%;
+    background:
+      conic-gradient(from 0deg, #3a3630, #1a1814, #2e2a24, #141210, #3a3630);
+    border:2px solid rgba(255,255,255,0.1);
+    display:grid;place-items:center;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      inset 0 -12px 28px rgba(0,0,0,0.75),
+      0 0 0 6px rgba(0,0,0,0.5),
+      0 0 0 7px rgba(245,213,140,0.08),
+      0 36px 72px -20px rgba(0,0,0,0.9),
+      0 0 0 rgba(245,213,140,0);
+    transition:box-shadow .5s ease, transform .25s ease;
+  }
+  /* Inner face — dark inset with brushed texture */
+  .key-btn .core::before{
+    content:"";position:absolute;inset:10px;border-radius:50%;
+    background:
+      radial-gradient(circle at 42% 35%, #1e1c18, #0d0b09 65%, #060504 100%);
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow:
+      inset 0 2px 2px rgba(255,255,255,0.06),
+      inset 0 -2px 4px rgba(0,0,0,0.9);
+  }
+  /* Amber indicator ring */
+  .key-btn .core::after{
+    content:"";position:absolute;inset:6px;border-radius:50%;
+    border:1px solid rgba(245,213,140,0.12);
+    box-shadow:0 0 8px rgba(245,213,140,0.05);
+    transition:border-color .4s ease, box-shadow .4s ease;
+  }
+  /* Engine-start glyph */
+  .key-btn .glyph{
+    position:relative;z-index:2;
+    width:68px;height:68px;display:grid;place-items:center;
+    color:rgba(245,213,140,0.9);
+  }
+  .key-btn .glyph svg{filter:drop-shadow(0 0 8px rgba(245,213,140,0.08));transition:filter .4s ease, color .4s ease}
+  .key-btn .label{
+    position:absolute;bottom:34px;left:0;right:0;
+    text-align:center;z-index:3;
+    font-family:var(--mono);font-size:7.5px;letter-spacing:0.45em;
+    color:rgba(245,243,238,0.5);text-transform:uppercase;pointer-events:none;
+    padding-left:0.45em;
+  }
+
+  .key-btn:hover .core{
+    transform:translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.14),
+      inset 0 -12px 28px rgba(0,0,0,0.75),
+      0 0 0 6px rgba(0,0,0,0.5),
+      0 0 0 7px rgba(245,213,140,0.2),
+      0 36px 72px -20px rgba(0,0,0,0.9),
+      0 0 50px rgba(245,213,140,0.2);
+  }
+  .key-btn:hover .core::after{
+    border-color:rgba(245,213,140,0.3);
+    box-shadow:0 0 16px rgba(245,213,140,0.12);
+  }
+  .key-btn:hover .glyph svg{filter:drop-shadow(0 0 12px rgba(245,213,140,0.4))}
+  .key-btn:hover .ring{border-color:rgba(245,243,238,0.2)}
+
+  .key-btn.turning .core{
+    transform:translateY(3px) scale(0.96);
+    box-shadow:
+      inset 0 3px 8px rgba(0,0,0,0.9),
+      inset 0 -4px 10px rgba(0,0,0,0.7),
+      0 0 0 6px rgba(0,0,0,0.5),
+      0 0 0 8px rgba(245,213,140,0.5),
+      0 10px 30px -10px rgba(0,0,0,0.9),
+      0 0 100px 16px rgba(245,213,140,0.6);
+  }
+  .key-btn.turning .core::after{
+    border-color:rgba(245,213,140,0.8);
+    box-shadow:0 0 24px rgba(245,213,140,0.5);
+  }
+  .key-btn.turning .glyph{color:rgba(255,240,190,1)}
+  .key-btn.turning .glyph svg{filter:drop-shadow(0 0 18px rgba(255,225,160,0.9))}
+
+  .ign-hint{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.4em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .ign-hint kbd{
+    font-family:var(--mono);font-size:9px;letter-spacing:0.1em;
+    border:1px solid var(--line);padding:3px 7px;border-radius:3px;margin:0 4px;
+    color:var(--ink-soft);
+  }
+
+  /* ===========================================================
+     HEADLIGHT BEAMS — ignite, swell, drive past, then VANISH
+     (no persistent ambient phase — they leave the screen entirely)
+     =========================================================== */
+  .stage{
+    position:fixed;inset:0;z-index:50;pointer-events:none;overflow:hidden;
+    opacity:0;transition:opacity 1.2s ease;
+  }
+  .stage.lit{opacity:1}
+  .stage.passing{opacity:1}
+  .stage.gone{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1.4s ease, visibility 0s linear 1.4s}
+
+  /* Two cone beams emerging from below the viewport */
+  .beam{
+    position:absolute;
+    bottom:-12%;
+    width:80vw;height:160vh;
+    transform-origin:50% 100%;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 100%,
+        rgba(255,232,180,0.55) 0%,
+        rgba(255,220,150,0.28) 18%,
+        rgba(255,210,140,0.12) 38%,
+        rgba(255,210,140,0.04) 60%,
+        transparent 80%);
+    filter:blur(28px);
+    mix-blend-mode:screen;
+    opacity:0;
+    transition:
+      opacity 1.6s ease,
+      transform 2.2s cubic-bezier(.2,.7,.2,1),
+      filter 1.6s ease;
+  }
+  .beam.left{left:-30vw;transform:rotate(-20deg) scaleY(0.4) scaleX(0.85)}
+  .beam.right{right:-30vw;transform:rotate(20deg) scaleY(0.4) scaleX(0.85)}
+
+  /* Phase 1: lit — beams open up at rest */
+  .stage.lit .beam{opacity:1}
+  .stage.lit .beam.left{transform:rotate(-12deg) scaleY(1) scaleX(1)}
+  .stage.lit .beam.right{transform:rotate(12deg) scaleY(1) scaleX(1)}
+
+  /* Phase 2: passing — car drives through the viewer. Beams accelerate, brighten, then disappear. */
+  .stage.passing .beam{
+    opacity:0;
+    filter:blur(60px);
+    transition:
+      opacity 1.8s cubic-bezier(.4,0,.7,1),
+      transform 1.8s cubic-bezier(.5,0,.75,1),
+      filter 1.8s ease;
+  }
+  .stage.passing .beam.left{transform:rotate(-42deg) scaleY(1.8) scaleX(2.2) translate(-12vw, 30vh)}
+  .stage.passing .beam.right{transform:rotate(42deg) scaleY(1.8) scaleX(2.2) translate(12vw, 30vh)}
+
+  /* Headlamp glow spots */
+  .lamp{
+    position:absolute;bottom:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle, rgba(255,240,200,0.9), rgba(255,220,160,0.2) 40%, transparent 70%);
+    filter:blur(2px);mix-blend-mode:screen;
+    opacity:0;
+    transition:
+      opacity 1.4s ease,
+      transform 1.8s cubic-bezier(.5,0,.7,1),
+      width 1.8s cubic-bezier(.5,0,.7,1),
+      height 1.8s cubic-bezier(.5,0,.7,1);
+  }
+  .stage.lit .lamp{opacity:0.95}
+  .lamp.left{left:calc(50% - 280px)}
+  .lamp.right{left:calc(50% + 60px)}
+  /* Lamps swell huge and pass overhead as the car drives through */
+  .stage.passing .lamp{
+    opacity:0;width:560px;height:560px;
+    transform:translate(0, -40vh) scale(1.6);
+  }
+  .stage.passing .lamp.left{transform:translate(-60vw, -40vh) scale(1.8)}
+  .stage.passing .lamp.right{transform:translate(60vw, -40vh) scale(1.8)}
+
+  /* The headlamp "flash" plate — short white wash as the car passes */
+  .flash{
+    position:fixed;inset:0;z-index:55;pointer-events:none;
+    background:radial-gradient(ellipse 60% 60% at 50% 70%, rgba(255,245,220,0.85), rgba(255,235,200,0.5) 25%, transparent 65%);
+    opacity:0;mix-blend-mode:screen;
+    transition:opacity .9s ease;
+  }
+  .flash.on{opacity:1;transition:opacity .35s ease}
+
+  /* Atmospheric dust drifting through beams */
+  .dust{position:absolute;inset:0;opacity:0;transition:opacity 2.5s ease 1s}
+  .stage.lit .dust{opacity:0.5}
+  .dust span{
+    position:absolute;width:2px;height:2px;border-radius:50%;
+    background:rgba(255,235,200,0.9);
+    box-shadow:0 0 6px rgba(255,235,200,0.7);
+    animation:drift linear infinite;
+  }
+  @keyframes drift{
+    0%{transform:translate3d(0, 110vh, 0);opacity:0}
+    10%{opacity:1}
+    90%{opacity:0.6}
+    100%{transform:translate3d(var(--dx,40px), -10vh, 0);opacity:0}
+  }
+
+  /* ===========================================================
+     GLOBAL PARTICLE FIELD — calm, slow drift, very subtle
+     =========================================================== */
+  .particles{
+    position:fixed;inset:0;z-index:15;pointer-events:none;
+    opacity:0;transition:opacity 2.4s ease 1.2s;
+  }
+  .particles.shown{opacity:1}
+  .particles canvas{width:100%;height:100%;display:block}
+
+  /* ===========================================================
+     MAIN CONTENT
+     =========================================================== */
+  main{
+    position:relative;z-index:10;
+    opacity:0;transition:opacity 1.6s ease 0.6s;
+  }
+  main.revealed{opacity:1}
+
+  .container{max-width:1360px;margin:0 auto;padding:0 clamp(28px,6vw,80px)}
+
+  /* ----- Top nav ----- */
+  .topnav{
+    position:fixed;top:0;left:0;right:0;z-index:80;
+    padding:28px clamp(28px,5vw,64px);
+    display:flex;align-items:center;justify-content:space-between;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    background:linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+    opacity:0;transition:opacity 1.2s ease 1.2s;
+  }
+  .topnav.revealed{opacity:1}
+  .topnav .mark{
+    font-family:var(--display);font-size:20px;font-weight:400;letter-spacing:0.42em;
+  }
+  .topnav .meta{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
+    color:var(--ink-soft);text-transform:uppercase;
+    display:flex;gap:26px;align-items:center;
+  }
+  .topnav .meta .live{
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .topnav .meta .live::before{
+    content:"";width:6px;height:6px;border-radius:50%;
+    background:var(--spark);box-shadow:0 0 10px var(--spark);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @media (max-width:760px){.topnav .meta{gap:14px;font-size:9px;letter-spacing:0.25em}}
+
+  /* ----- Hero ----- */
+  .hero{
+    height:100svh;
+    position:relative;
+    background:var(--sec-hero);
+    display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+    padding:0 clamp(24px,5vw,60px) clamp(48px,6vh,80px);
+    text-align:center;
+    overflow:hidden;
+  }
+  /* Hero background image */
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:url('Hero Section image.png') center 60% / cover no-repeat;
+    opacity:0;
+    transition:opacity 2s ease 1.2s;
+  }
+  /* Dark gradient overlay for text readability */
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(to bottom, rgba(5,5,5,0.5) 0%, transparent 30%),
+      linear-gradient(to top, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.6) 30%, transparent 55%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, rgba(5,5,5,0.4), transparent 70%);
+  }
+  main.revealed .hero::before{opacity:1}
+
+  .hero-content{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;
+    width:100%;max-width:900px;
+  }
+  .hero .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.55em;
+    color:var(--ink-soft);text-transform:uppercase;
+    margin-bottom:24px;
+    opacity:0;transform:translateY(8px);
+    transition:opacity 1.2s ease 1.0s, transform 1.2s ease 1.0s;
+  }
+  .hero .wordmark{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(44px,10vw,120px);
+    line-height:1.05;letter-spacing:0.01em;
+    margin:0;
+    padding:0.08em 0 0.12em;
+    background:linear-gradient(180deg, #ffffff 0%, #ffe9bf 55%, #b08c4a 110%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    opacity:0;transform:translateY(20px);filter:blur(8px);
+    transition:opacity 1.8s ease 1.4s, transform 1.8s ease 1.4s, filter 1.8s ease 1.4s;
+  }
+  .hero .wordmark em{font-style:italic;font-weight:300}
+  .hero .tagline{
+    margin-top:20px;
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:clamp(16px,2vw,24px);
+    color:var(--ink-soft);letter-spacing:0.02em;
+    max-width:560px;
+    opacity:0;transform:translateY(12px);
+    transition:opacity 1.4s ease 2.0s, transform 1.4s ease 2.0s;
+  }
+  .hero .meta-row{
+    margin-top:36px;
+    display:flex;gap:clamp(24px,4vw,56px);flex-wrap:wrap;justify-content:center;
+    padding:24px 0;
+    border-top:1px solid rgba(245,243,238,0.1);
+    width:100%;
+    opacity:0;transform:translateY(12px);
+    transition:opacity 1.2s ease 2.4s, transform 1.2s ease 2.4s;
+  }
+  .hero .meta-row .cell{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
+    color:var(--ink-soft);text-transform:uppercase;
+    display:flex;flex-direction:column;gap:10px;align-items:center;
+  }
+  .hero .meta-row .cell strong{
+    font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:0.02em;
+    color:var(--ink);text-transform:none;font-style:italic;
+  }
+  .hero .scroll-hint{display:none}
+
+  main.revealed .hero .eyebrow,
+  main.revealed .hero .wordmark,
+  main.revealed .hero .tagline,
+  main.revealed .hero .meta-row,
+  main.revealed .hero .scroll-hint,
+  main.revealed .hero .vehicle-frame{
+    opacity:1;transform:translateY(0);filter:blur(0);
+  }
+
+  /* ===========================================================
+     VEHICLE FRAME — placeholder for the launch image (user-provided)
+     =========================================================== */
+  .vehicle-frame{display:none}
+
+  /* Section frame */
+  section{position:relative;padding:clamp(140px,20vh,260px) 0}
+  .section-num{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.5em;
+    color:var(--ink-faint);text-transform:uppercase;
+    margin-bottom:48px;
+    display:flex;align-items:center;gap:18px;
+  }
+  .section-num::after{content:"";flex:1;height:1px;background:var(--line-soft);max-width:120px}
+  .section-title{
+    font-family:var(--display);font-weight:300;
+    font-size:clamp(38px,6vw,82px);
+    line-height:1.02;letter-spacing:-0.005em;
+    color:var(--ink);
+  }
+  .section-title em{font-style:italic;color:var(--beam)}
+
+  /* Reveal-on-scroll — smooth cinematic entries */
+  .reveal{
+    opacity:0;transform:translateY(44px);
+    transition:opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1), filter 1.4s ease;
+    filter:blur(2px);
+  }
+  .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
+  .reveal.d1{transition-delay:0.12s}
+  .reveal.d2{transition-delay:0.24s}
+  .reveal.d3{transition-delay:0.36s}
+  .reveal.d4{transition-delay:0.48s}
+
+  /* Section title special animation — slides up + scale */
+  .section-title.reveal{
+    transform:translateY(50px) scale(0.97);
+    filter:blur(3px);
+  }
+  .section-title.reveal.in{transform:translateY(0) scale(1);filter:blur(0)}
+
+  /* Programme items slide in from side */
+  .programme .item.reveal{transform:translateY(30px) translateX(-12px)}
+  .programme .item.reveal.in{transform:translateY(0) translateX(0)}
+
+  /* Countdown units scale up */
+  .countdown .unit.reveal{transform:translateY(30px) scale(0.9)}
+  .countdown .unit.reveal.in{transform:translateY(0) scale(1)}
+
+  /* Venue card subtle rotation */
+  .venue-card.reveal{transform:translateY(40px) perspective(800px) rotateX(2deg)}
+  .venue-card.reveal.in{transform:translateY(0) perspective(800px) rotateX(0)}
+
+  /* Pills pop in */
+  .pillstrip.reveal span{
+    opacity:0;transform:scale(0.8) translateY(10px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .pillstrip.reveal.in span{opacity:1;transform:scale(1) translateY(0)}
+  .pillstrip.reveal.in span:nth-child(1){transition-delay:0.1s}
+  .pillstrip.reveal.in span:nth-child(2){transition-delay:0.18s}
+  .pillstrip.reveal.in span:nth-child(3){transition-delay:0.26s}
+  .pillstrip.reveal.in span:nth-child(4){transition-delay:0.34s}
+
+  /* ===========================================================
+     COUNTDOWN — cool blue-black
+     =========================================================== */
+  .countdown{
+    text-align:center;
+    background:var(--sec-count);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(110,170,230,0.06), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(110,170,230,0.04), transparent 60%);
+  }
+  .countdown .section-num{justify-content:center}
+  .countdown .section-num::before{content:"";flex:1;height:1px;background:var(--line-soft);max-width:120px}
+  .countdown .section-title{text-align:center}
+  .countdown .timer{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:clamp(12px,3vw,48px);
+    margin-top:76px;
+    align-items:end;
+  }
+  .countdown .unit{
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    padding:44px 16px 36px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .countdown .unit::before,
+  .countdown .unit::after{
+    content:"";position:absolute;width:5px;height:5px;border-radius:50%;
+    background:var(--spark);box-shadow:0 0 10px var(--spark);
+  }
+  .countdown .unit::before{top:-3px;left:-3px}
+  .countdown .unit::after{bottom:-3px;right:-3px}
+  .countdown .num{
+    font-family:var(--mono);font-weight:300;
+    font-size:clamp(42px,8vw,120px);
+    line-height:0.9;letter-spacing:-0.02em;
+    color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .countdown .label{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.45em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .countdown .footnote{
+    margin-top:52px;
+    font-family:var(--mono);font-size:10px;letter-spacing:0.3em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .countdown .footnote .accurate{color:var(--spark)}
+
+  @media (max-width:640px){
+    .countdown .timer{grid-template-columns:repeat(2,1fr);gap:24px}
+  }
+
+  /* ===========================================================
+     ABOUT — warm espresso
+     =========================================================== */
+  .about{
+    position:relative;
+    background:var(--sec-about);
+    background-image:
+      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(245,213,140,0.05), transparent 60%);
+  }
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(48px,8vw,140px);
+    align-items:start;
+    margin-top:88px;
+  }
+  .about-grid .lead{
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:clamp(22px,2.6vw,34px);
+    line-height:1.3;color:var(--ink);
+  }
+  .about-grid .body p{
+    font-size:17.5px;line-height:1.78;color:var(--ink-soft);
+    margin-bottom:22px;max-width:60ch;
+  }
+  .about-grid .body p:last-child{margin-bottom:0}
+  .pillstrip{
+    display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;
+  }
+  .pillstrip span{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.3em;
+    color:var(--ink-soft);text-transform:uppercase;
+    padding:10px 20px;border:1px solid var(--line);border-radius:99px;
+  }
+  @media (max-width:880px){.about-grid{grid-template-columns:1fr}}
+
+  /* ===========================================================
+     THE EVENING — cream contrast break (light section)
+     =========================================================== */
+  .evening{
+    background:var(--sec-evening);
+    color:#1a1612;
+    background-image:
+      radial-gradient(ellipse 60% 30% at 50% 0%, rgba(0,0,0,0.04), transparent 70%);
+  }
+  .evening .section-num{color:rgba(26,22,18,0.45)}
+  .evening .section-num::after{background:rgba(26,22,18,0.15)}
+  .evening .section-title{color:#1a1612}
+  .evening .section-title em{color:var(--ember);font-style:italic}
+  .programme{
+    display:grid;grid-template-columns:repeat(2, minmax(0,1fr));
+    margin-top:88px;
+    border-top:1px solid rgba(26,22,18,0.15);
+  }
+  .programme .item{
+    display:grid;grid-template-columns:52px 1fr;gap:28px;
+    padding:48px 40px;
+    border-bottom:1px solid rgba(26,22,18,0.15);
+    border-right:1px solid rgba(26,22,18,0.15);
+    transition:background .6s ease;
+  }
+  .programme .item:nth-child(2n){border-right:0}
+  .programme .item:hover{background:rgba(26,22,18,0.025)}
+  .programme .item .idx{
+    font-family:var(--mono);font-size:11px;letter-spacing:0.2em;
+    color:rgba(26,22,18,0.4);
+  }
+  .programme .item .copy h3{
+    font-family:var(--display);font-weight:400;
+    font-size:26px;line-height:1.2;letter-spacing:0.01em;
+    color:#1a1612;
+    margin-bottom:14px;
+  }
+  .programme .item .copy p{
+    font-size:15.5px;line-height:1.7;color:rgba(26,22,18,0.6);
+    max-width:42ch;
+  }
+  @media (max-width:760px){
+    .programme{grid-template-columns:1fr}
+    .programme .item{border-right:0}
+  }
+
+  /* ===========================================================
+     VENUE / MAP — deep navy
+     =========================================================== */
+  .venue{
+    background:var(--sec-venue);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 0% 50%, rgba(80,140,230,0.06), transparent 60%);
+  }
+  .venue-grid{
+    display:grid;grid-template-columns:1fr 1.2fr;gap:52px;
+    margin-top:76px;align-items:stretch;
+  }
+  .venue-card{
+    padding:52px;
+    border:1px solid var(--line);border-radius:4px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+    display:flex;flex-direction:column;justify-content:space-between;gap:36px;
+    position:relative;overflow:hidden;
+  }
+  .venue-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg, transparent, var(--beam), transparent);
+    opacity:0.5;
+  }
+  .venue-card .name{
+    font-family:var(--display);font-weight:300;font-size:48px;line-height:1.05;letter-spacing:0.005em;
+  }
+  .venue-card .addr{
+    font-size:14px;line-height:1.7;color:var(--ink-soft);margin-top:14px;
+  }
+  .venue-card .rows{display:flex;flex-direction:column;gap:18px;margin-top:28px}
+  .venue-card .row{
+    display:flex;justify-content:space-between;gap:24px;
+    padding-bottom:18px;border-bottom:1px solid var(--line-soft);
+  }
+  .venue-card .row:last-child{border-bottom:0}
+  .venue-card .row .k{
+    font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
+    color:var(--ink-faint);text-transform:uppercase;align-self:end;
+  }
+  .venue-card .row .v{
+    font-family:var(--display);font-size:22px;font-weight:400;text-align:right;
+  }
+  .venue-card .directions{
+    display:inline-flex;align-items:center;justify-content:space-between;
+    padding:20px 24px;
+    border:1px solid var(--line);border-radius:3px;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.35em;
+    color:var(--ink);text-transform:uppercase;
+    transition:background .4s ease, border-color .4s ease;
+  }
+  .venue-card .directions:hover{background:rgba(245,243,238,0.04);border-color:var(--ink-soft)}
+  .venue-card .directions svg{margin-left:14px}
+
+  .map-frame{
+    position:relative;min-height:520px;
+    border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;background:#0a0a0a;
+  }
+  .map-frame iframe{
+    width:100%;height:100%;border:0;
+    /* night-style filter to match aesthetic */
+    filter:invert(0.92) hue-rotate(180deg) saturate(0.5) brightness(0.92) contrast(0.9);
+  }
+  .map-frame .badge{
+    position:absolute;top:18px;left:18px;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.35em;
+    color:var(--ink);text-transform:uppercase;
+    padding:8px 12px;background:rgba(0,0,0,0.65);
+    border:1px solid var(--line);backdrop-filter:blur(6px);
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .map-frame .badge::before{
+    content:"";width:6px;height:6px;border-radius:50%;
+    background:var(--spark);box-shadow:0 0 8px var(--spark);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @media (max-width:880px){.venue-grid{grid-template-columns:1fr}.map-frame{min-height:380px}}
+
+  /* ===========================================================
+     RSVP / details — warm amber-black
+     =========================================================== */
+  .rsvp{
+    position:relative;text-align:center;
+    background:var(--sec-rsvp);
+    background-image:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(245,213,140,0.06), transparent 60%),
+      radial-gradient(ellipse 50% 30% at 50% 100%, rgba(245,213,140,0.04), transparent 60%);
+  }
+  .rsvp .section-num{justify-content:center}
+  .rsvp .section-num::after{display:none}
+  .rsvp .copy{
+    max-width:680px;margin:40px auto 64px;
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:clamp(20px,2.4vw,28px);line-height:1.4;color:var(--ink-soft);
+  }
+  .rsvp .actions{
+    display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+  }
+  .btn{
+    position:relative;display:inline-flex;align-items:center;gap:18px;
+    padding:24px 42px;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.4em;text-transform:uppercase;
+    color:var(--bg);background:var(--ink);
+    border:0;border-radius:3px;cursor:pointer;
+    transition:transform .35s ease, box-shadow .35s ease, background .35s ease;
+  }
+  .btn::after{content:"";width:18px;height:1px;background:var(--bg);transition:width .35s ease}
+  .btn:hover{background:var(--beam);box-shadow:0 24px 48px -16px rgba(245,213,140,0.4);transform:translateY(-2px)}
+  .btn:hover::after{width:28px}
+  .btn.ghost{
+    background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:3px;
+  }
+  .btn.ghost::after{background:var(--ink)}
+  .btn.ghost:hover{background:rgba(245,243,238,0.05);border-color:var(--ink-soft);box-shadow:none;transform:translateY(-2px)}
+
+  .rsvp .details-row{
+    margin-top:100px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .rsvp .details-row .cell{
+    padding:40px 28px;
+    border-right:1px solid var(--line);
+    display:flex;flex-direction:column;gap:10px;align-items:flex-start;text-align:left;
+  }
+  .rsvp .details-row .cell:last-child{border-right:0}
+  .rsvp .details-row .cell .k{
+    font-family:var(--mono);font-size:9px;letter-spacing:0.4em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .rsvp .details-row .cell .v{
+    font-family:var(--display);font-weight:300;font-size:22px;line-height:1.2;
+  }
+  @media (max-width:760px){
+    .rsvp .details-row{grid-template-columns:repeat(2,1fr)}
+    .rsvp .details-row .cell:nth-child(2){border-right:0}
+    .rsvp .details-row .cell:nth-child(1),.rsvp .details-row .cell:nth-child(2){border-bottom:1px solid var(--line)}
+  }
+
+  /* ===========================================================
+     FOOTER
+     =========================================================== */
+  footer{
+    padding:80px 0 64px;border-top:1px solid var(--line);
+    background:#040404;
+    position:relative;z-index:10;
+  }
+  footer .row{
+    display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10px;letter-spacing:0.3em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  footer .mark{
+    font-family:var(--display);font-weight:300;font-size:24px;letter-spacing:0.42em;color:var(--ink);
+  }
+
+  /* ===========================================================
+     MUSIC TOGGLE
+     =========================================================== */
+  .audio-toggle{
+    position:fixed;right:22px;bottom:22px;z-index:90;
+    width:54px;height:54px;border-radius:50%;
+    background:rgba(8,8,8,0.85);backdrop-filter:blur(8px);
+    border:1px solid var(--line);color:var(--ink);
+    display:grid;place-items:center;cursor:pointer;
+    opacity:0;transform:translateY(20px);
+    transition:opacity .8s ease 2s, transform .8s ease 2s, border-color .3s ease, background .3s ease;
+  }
+  .audio-toggle.shown{opacity:1;transform:translateY(0)}
+  .audio-toggle:hover{border-color:var(--beam)}
+  .audio-toggle .bars{display:flex;align-items:center;gap:3px;height:18px}
+  .audio-toggle .bars span{
+    width:2px;height:100%;background:var(--ink);transform-origin:bottom;
+    animation:eq 1.2s ease-in-out infinite;
+    animation-play-state:paused;
+  }
+  .audio-toggle.playing .bars span{animation-play-state:running}
+  .audio-toggle .bars span:nth-child(1){animation-delay:0s}
+  .audio-toggle .bars span:nth-child(2){animation-delay:.18s}
+  .audio-toggle .bars span:nth-child(3){animation-delay:.36s}
+  .audio-toggle .bars span:nth-child(4){animation-delay:.5s}
+  @keyframes eq{
+    0%,100%{transform:scaleY(0.3)}
+    50%{transform:scaleY(1)}
+  }
+  .audio-toggle.muted .bars span{transform:scaleY(0.2);opacity:0.4}
+
+  /* Skip / accessibility */
+  .skip{
+    position:fixed;top:18px;right:18px;z-index:210;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.35em;
+    color:var(--ink-faint);text-transform:uppercase;
+    background:transparent;border:1px solid var(--line);
+    padding:8px 14px;cursor:pointer;
+    transition:color .3s ease, border-color .3s ease;
+  }
+  .skip:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .ignition.gone ~ .skip{display:none}
+
+  /* ===========================================================
+     MOBILE RESPONSIVENESS — comprehensive
+     =========================================================== */
+  @media (max-width: 880px){
+    .container{padding:0 24px}
+    section{padding:100px 0}
+    .topnav{padding:18px 24px}
+    .topnav .meta .hide-sm{display:none}
+    .hero{padding:140px 0 80px}
+    .hero .eyebrow{margin-bottom:36px;font-size:10px;letter-spacing:0.45em}
+    .hero .meta-row{gap:36px;margin-top:56px}
+    .hero .meta-row .cell strong{font-size:18px}
+    .countdown .timer{margin-top:48px}
+    .countdown .num{font-size:64px}
+    .countdown .unit{padding:32px 10px 24px}
+    .countdown .footnote{font-size:9px;letter-spacing:0.2em;line-height:1.6}
+    .about-grid{margin-top:56px;gap:36px}
+    .about-grid .lead{font-size:22px}
+    .about-grid .body p{font-size:15.5px}
+    .programme{margin-top:56px}
+    .programme .item{padding:36px 28px}
+    .programme .item .copy h3{font-size:21px}
+    .venue-grid{gap:32px;margin-top:48px}
+    .venue-card{padding:36px 30px;gap:28px}
+    .venue-card .name{font-size:34px}
+    .venue-card .row .v{font-size:18px}
+    .venue-card .directions{padding:18px 20px;font-size:10px}
+    .map-frame{min-height:360px}
+    .rsvp .copy{margin:28px auto 48px;font-size:19px}
+    .rsvp .actions{flex-direction:column;align-items:stretch;gap:14px;max-width:360px;margin:0 auto}
+    .btn{padding:20px 30px;font-size:10px;justify-content:center}
+    .btn::after{width:14px}
+    .rsvp .details-row{margin-top:64px}
+    .rsvp .details-row .cell{padding:28px 20px}
+    .rsvp .details-row .cell .v{font-size:18px}
+    footer{padding:48px 0 36px}
+    footer .row{justify-content:center;text-align:center;gap:16px;font-size:9px;letter-spacing:0.25em}
+    footer .mark{font-size:18px}
+    .section-num{margin-bottom:28px;font-size:9px;letter-spacing:0.35em}
+    .section-num::after,.countdown .section-num::before{display:none}
+  }
+
+  @media (max-width: 600px){
+    .container{padding:0 20px}
+    .topnav{padding:16px 20px}
+    .topnav .mark{font-size:15px;letter-spacing:0.32em}
+    .topnav .meta{font-size:8.5px;letter-spacing:0.2em;gap:10px}
+    .hero{padding:120px 0 64px}
+    .hero .eyebrow{margin-bottom:28px;font-size:9.5px}
+    .hero .tagline{margin-top:32px;padding:0 12px}
+    .hero .meta-row{flex-direction:column;gap:24px;margin-top:48px}
+    section{padding:80px 0}
+    .countdown .timer{gap:16px}
+    .countdown .num{font-size:52px}
+    .countdown .label{font-size:9px;letter-spacing:0.3em}
+    .countdown .unit{padding:28px 8px 20px}
+    .about-grid .lead{font-size:20px}
+    .about-grid .body p{font-size:14.5px;line-height:1.7}
+    .programme .item{padding:32px 24px}
+    .programme .item .copy h3{font-size:19px}
+    .programme .item .copy p{font-size:14px}
+    .venue-card{padding:28px 24px}
+    .venue-card .name{font-size:28px}
+    .venue-card .rows{gap:14px;margin-top:20px}
+    .venue-card .row{padding-bottom:14px}
+    .map-frame{min-height:300px}
+    .map-frame .badge{top:12px;left:12px;font-size:8.5px;letter-spacing:0.25em;padding:6px 10px}
+    .rsvp .copy{font-size:17px;padding:0 8px}
+    .rsvp .details-row .cell{padding:24px 16px}
+    .rsvp .details-row .cell .v{font-size:17px}
+    .section-title{font-size:clamp(32px,8vw,44px)}
+
+    /* Ignition */
+    .ign-stack{gap:40px}
+    .ign-eyebrow{font-size:9px;letter-spacing:0.35em;padding:0 20px;text-align:center}
+    .ign-title{font-size:22px;padding:0 20px}
+    .ign-hint{font-size:9px;letter-spacing:0.3em;text-align:center;padding:0 20px}
+    .key-btn{width:170px;height:170px}
+    .key-btn .core{width:100px;height:100px}
+    .key-btn .glyph{width:52px;height:52px}
+    .key-btn .glyph svg{width:32px;height:32px}
+    .key-btn .ring.r2{inset:-18px}
+    .key-btn .ring.r3{inset:-36px}
+    .ignition .car-image{width:100vw}
+    .ign-stack{margin-top:-12vh}
+    .ignition .silhouette{height:32vh;opacity:0.3}
+    .skip{top:14px;right:14px;font-size:8px;letter-spacing:0.25em;padding:6px 10px}
+    .audio-toggle{right:14px;bottom:14px;width:46px;height:46px}
+    .pillstrip span{padding:8px 14px;font-size:9px}
+  }
+
+  @media (max-width: 380px){
+    .countdown .num{font-size:42px}
+    .countdown .unit{padding:22px 6px 16px}
+    .hero .wordmark{font-size:48px}
+    .section-title{font-size:30px}
+    .hero .meta-row .cell strong{font-size:16px}
+    .venue-card .name{font-size:24px}
+    .programme .item{padding:26px 20px}
+    .programme .item .copy h3{font-size:18px}
+  }
+
+  /* Print fallback */
+  @media print{
+    .ignition,.stage,.audio-toggle,.skip,.topnav,.map-frame iframe{display:none!important}
+    main{opacity:1!important}
+    body{background:#fff;color:#000}
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     IGNITION OVERLAY
+     ========================================================= -->
+<div class="ignition" id="ignition">
+  <div class="vignette"></div>
+
+  <!-- Car image -->
+  <div class="car-image" aria-hidden="true">
+    <picture>
+      <source media="(max-width:700px)" srcset="Car-mobile-view.png">
+      <img src="Car silloete.png" alt="" draggable="false" fetchpriority="high" loading="eager">
+    </picture>
+  </div>
+
+
+  <div class="ign-stack">
+    <div class="ign-eyebrow"><span class="dot"></span>Sterling Automobiles</div>
+    <h1 class="ign-title">The <em>Reveal</em> Awaits</h1>
+
+    <button class="key-btn" id="keyBtn" aria-label="Engine start — begin the experience">
+      <span class="ring r3"></span>
+      <span class="ring r2"></span>
+      <span class="ring"></span>
+      <span class="core">
+        <span class="glyph">
+          <!-- Push-to-start power glyph -->
+          <svg width="44" height="44" viewBox="0 0 38 38" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M 19 6 V 17"/>
+            <path d="M 10 11.5 A 12 12 0 1 0 28 11.5"/>
+          </svg>
+        </span>
+      </span>
+    </button>
+
+    <div class="ign-hint">Press to ignite</div>
+  </div>
+</div>
+<button class="skip" id="skipBtn" aria-label="Skip intro">Skip Intro</button>
+
+<!-- =========================================================
+     HEADLIGHT STAGE
+     ========================================================= -->
+<div class="stage" id="stage" aria-hidden="true">
+  <div class="beam left"></div>
+  <div class="beam right"></div>
+  <div class="lamp left"></div>
+  <div class="lamp right"></div>
+  <div class="dust" id="dust"></div>
+</div>
+<div class="flash" id="flash" aria-hidden="true"></div>
+
+<!-- Calm, drifting particle field across the whole site -->
+<div class="particles" id="particles" aria-hidden="true"><canvas id="pCanvas"></canvas></div>
+
+<!-- =========================================================
+     TOP NAV
+     ========================================================= -->
+<nav class="topnav" id="topnav">
+  <div class="mark">STERLING</div>
+  <div class="meta">
+    <span class="live">Reveal Imminent</span>
+    <span>18 · 06 · 26</span>
+    <span class="hide-sm">Colombo</span>
+  </div>
+</nav>
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">Sterling Automobiles · Sub-brand Reveal</div>
+      <h1 class="wordmark">An Electric<br><em>Beginning.</em></h1>
+      <p class="tagline">The next chapter in smart, sustainable mobility&nbsp;— revealed under one roof, for one night only.</p>
+
+      <div class="meta-row">
+        <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong></div>
+        <div class="cell">Where<strong>Havelock City Mall, Colombo</strong></div>
+        <div class="cell">Attire<strong>Smart Evening</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown" id="countdown">
+    <div class="container">
+      <div class="section-num reveal"><span>01</span><span>Time to Ignition</span></div>
+      <h2 class="section-title reveal d1">The clock<br>is <em>running.</em></h2>
+
+      <div class="timer">
+        <div class="unit reveal d1"><div class="num" id="d">--</div><div class="label">Days</div></div>
+        <div class="unit reveal d2"><div class="num" id="h">--</div><div class="label">Hours</div></div>
+        <div class="unit reveal d3"><div class="num" id="m">--</div><div class="label">Minutes</div></div>
+        <div class="unit reveal d4"><div class="num" id="s">--</div><div class="label">Seconds</div></div>
+      </div>
+
+      <p class="footnote reveal">
+        <span class="accurate">●</span>&nbsp; Synchronised to the moment of reveal&nbsp;—&nbsp;<span id="localLine">18 June 2026 · 19:00 Asia/Colombo (UTC+5:30)</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="container">
+      <div class="section-num reveal"><span>02</span><span>The Reveal</span></div>
+      <h2 class="section-title reveal d1">A new <em>sub-brand.</em><br>A new <em>silhouette.</em></h2>
+
+      <div class="about-grid">
+        <p class="lead reveal d1">
+          For one evening, Havelock City Mall becomes the launchpad for what comes next in Sri Lankan mobility.
+        </p>
+        <div class="body">
+          <p class="reveal d2">Sterling Automobiles invites you to the official unveiling of a new sub-brand and its first electric vehicle&nbsp;— an exclusive launch experience for media, influencers, automotive enthusiasts, and industry guests.</p>
+          <p class="reveal d3">Expect a full-bodied evening: the marque reveal, brand presentations, the launch of a new digital home, and curated moments built for the camera. This is more than a product launch&nbsp;— it is a statement of where we are headed.</p>
+          <div class="pillstrip reveal d4">
+            <span>Smart Mobility</span>
+            <span>Sustainable</span>
+            <span>By Invitation</span>
+            <span>One Night</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE EVENING -->
+  <section class="evening">
+    <div class="container">
+      <div class="section-num reveal"><span>03</span><span>The Evening</span></div>
+      <h2 class="section-title reveal d1">Seven moments,<br>one <em>night.</em></h2>
+
+      <div class="programme">
+        <div class="item reveal d1">
+          <div class="idx">01</div>
+          <div class="copy">
+            <h3>Sub-brand &amp; Vehicle Reveal</h3>
+            <p>The official unveiling — the marque, the silhouette, the technology.</p>
+          </div>
+        </div>
+        <div class="item reveal d1">
+          <div class="idx">02</div>
+          <div class="copy">
+            <h3>Brand Presentations &amp; Entertainment</h3>
+            <p>Stories from the people behind the build, paired with live entertainment.</p>
+          </div>
+        </div>
+        <div class="item reveal d2">
+          <div class="idx">03</div>
+          <div class="copy">
+            <h3>New Website Launch</h3>
+            <p>A new digital home goes live the moment the curtain drops.</p>
+          </div>
+        </div>
+        <div class="item reveal d2">
+          <div class="idx">04</div>
+          <div class="copy">
+            <h3>Interactive Experience Zones</h3>
+            <p>Hands-on encounters with the vehicle and the world it lives in.</p>
+          </div>
+        </div>
+        <div class="item reveal d3">
+          <div class="idx">05</div>
+          <div class="copy">
+            <h3>Networking</h3>
+            <p>Conversations with industry, media, and the enthusiast community.</p>
+          </div>
+        </div>
+        <div class="item reveal d3">
+          <div class="idx">06</div>
+          <div class="copy">
+            <h3>Photo &amp; Content Moments</h3>
+            <p>Considered set-pieces, made for the lens and the social feed.</p>
+          </div>
+        </div>
+        <div class="item reveal d4">
+          <div class="idx">07</div>
+          <div class="copy">
+            <h3>Refreshments &amp; Cocktails</h3>
+            <p>An evening menu to mark the occasion. Drive carefully.</p>
+          </div>
+        </div>
+        <div class="item reveal d4">
+          <div class="idx">★</div>
+          <div class="copy">
+            <h3>The Moment You'll Talk About</h3>
+            <p>You'll know it when you see it. Be in the room.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE -->
+  <section class="venue">
+    <div class="container">
+    <div class="section-num reveal"><span>04</span><span>The Venue</span></div>
+    <h2 class="section-title reveal d1">Havelock City Mall,<br><em>Colombo.</em></h2>
+
+    <div class="venue-grid">
+      <div class="venue-card reveal d1">
+        <div>
+          <div class="name">Havelock City Mall</div>
+          <div class="addr">
+            324 Havelock Road,<br>
+            Colombo 06,<br>
+            Sri Lanka
+          </div>
+        </div>
+        <div class="rows">
+          <div class="row"><span class="k">Date</span><span class="v">Thu · 18 Jun 2026</span></div>
+          <div class="row"><span class="k">Doors</span><span class="v">6:30 PM</span></div>
+          <div class="row"><span class="k">Reveal</span><span class="v">7:00 PM</span></div>
+          <div class="row"><span class="k">Valet</span><span class="v">Available on-site</span></div>
+        </div>
+        <a class="directions" href="https://www.google.com/maps/dir/?api=1&destination=Havelock+City+Mall+Colombo" target="_blank" rel="noopener">
+          Open in Maps
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M3 11 L11 3"/><path d="M5 3 H11 V9"/></svg>
+        </a>
+      </div>
+      <div class="map-frame reveal d2">
+        <div class="badge">Live Map · Colombo</div>
+        <iframe
+          loading="lazy"
+          allow="fullscreen"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Havelock+City+Mall,+Colombo+Sri+Lanka&output=embed&z=16">
+        </iframe>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp">
+    <div class="container">
+      <div class="section-num reveal"><span>05</span><span>The Invitation</span></div>
+      <h2 class="section-title reveal d1">Your seat,<br><em>reserved.</em></h2>
+      <p class="copy reveal d2">This is an invitation-only evening. Please confirm your attendance so we can prepare your place at the reveal.</p>
+
+      <div class="actions reveal d3">
+        <a class="btn ghost" id="addCal" href="#">Add to Calendar</a>
+      </div>
+
+      <div class="details-row">
+        <div class="cell reveal d1"><div class="k">Date</div><div class="v">18 June 2026</div></div>
+        <div class="cell reveal d2"><div class="k">Time</div><div class="v">7:00 PM</div></div>
+        <div class="cell reveal d3"><div class="k">Venue</div><div class="v">Havelock City Mall</div></div>
+        <div class="cell reveal d4"><div class="k">City</div><div class="v">Colombo, Sri Lanka</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container row">
+      <div class="mark">STERLING</div>
+      <div>© 2026 · Sterling Automobiles Lanka (Pvt) Ltd</div>
+      <div>Electric Reveal · By Invitation</div>
+    </div>
+  </footer>
+</main>
+
+<!-- Audio toggle -->
+<button class="audio-toggle muted" id="audioToggle" aria-label="Toggle background music" title="Toggle music">
+  <span class="bars"><span></span><span></span><span></span><span></span></span>
+</button>
+
+<script>
+  /* ============================================================
+     1. EVENT TIME — UTC anchored, accurate worldwide
+     Event: 18 June 2026, 7:00 PM Asia/Colombo (UTC+5:30)
+            = 18 June 2026, 13:30:00 UTC
+     ============================================================ */
+  const TARGET_UTC_MS = Date.UTC(2026, 5, 18, 13, 30, 0); // month 0-indexed
+  const pad = n => String(n).padStart(2,'0');
+
+  function tick(){
+    const now = Date.now();
+    let delta = Math.max(0, TARGET_UTC_MS - now);
+    const days = Math.floor(delta / 86400000); delta -= days*86400000;
+    const hours = Math.floor(delta / 3600000); delta -= hours*3600000;
+    const mins = Math.floor(delta / 60000); delta -= mins*60000;
+    const secs = Math.floor(delta / 1000);
+    document.getElementById('d').textContent = pad(days);
+    document.getElementById('h').textContent = pad(hours);
+    document.getElementById('m').textContent = pad(mins);
+    document.getElementById('s').textContent = pad(secs);
+  }
+  tick();
+  setInterval(tick, 1000);
+
+
+  /* Show local-time line for visitor in their tz, plus origin line */
+  (function localLine(){
+    try{
+      const d = new Date(TARGET_UTC_MS);
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
+      const fmt = new Intl.DateTimeFormat(undefined, {
+        weekday:'short', day:'2-digit', month:'short', year:'numeric',
+        hour:'2-digit', minute:'2-digit'
+      }).format(d);
+      const el = document.getElementById('localLine');
+      el.textContent = `18 June 2026 · 19:00 Colombo  ·  Your time: ${fmt} (${tz})`;
+    }catch(e){}
+  })();
+
+  /* ============================================================
+     2. IGNITION & REVEAL
+     ============================================================ */
+  const ignition = document.getElementById('ignition');
+  const keyBtn   = document.getElementById('keyBtn');
+  const stage    = document.getElementById('stage');
+  const flash    = document.getElementById('flash');
+  const main     = document.getElementById('main');
+  const topnav   = document.getElementById('topnav');
+  const audioToggle = document.getElementById('audioToggle');
+  const skipBtn  = document.getElementById('skipBtn');
+  const particles = document.getElementById('particles');
+
+  let revealed = false;
+
+  function reveal(skipDelay){
+    if (revealed) return;
+    revealed = true;
+
+    keyBtn.classList.add('turning');
+    playIgnitionSfx();
+
+    // Phase 1: engine sound + music
+    setTimeout(() => {
+      stage.classList.add('lit');
+      spawnDust();
+      startMusic();
+    }, skipDelay ? 0 : 380);
+
+    // Phase 2: zoom into car + flash
+    setTimeout(() => {
+      ignition.classList.add('zooming');
+      stage.classList.add('passing');
+      flash.classList.add('on');
+      playPassBySfx();
+    }, skipDelay ? 200 : 1400);
+
+    // Phase 3: overlay gone, content reveals
+    setTimeout(() => {
+      ignition.classList.add('gone');
+      flash.classList.remove('on');
+      main.classList.add('revealed');
+      topnav.classList.add('revealed');
+      audioToggle.classList.add('shown');
+      particles.classList.add('shown');
+      startParticles();
+    }, skipDelay ? 500 : 2600);
+
+    // Phase 4: clean up stage
+    setTimeout(() => {
+      stage.classList.remove('lit');
+      stage.classList.remove('passing');
+      stage.classList.add('gone');
+      observeReveals();
+    }, skipDelay ? 900 : 3400);
+  }
+
+  keyBtn.addEventListener('click', () => reveal(false));
+  skipBtn.addEventListener('click', () => reveal(true));
+  window.addEventListener('keydown', (e) => {
+    if ((e.code === 'Space' || e.code === 'Enter') && !revealed){
+      e.preventDefault();
+      reveal(false);
+    }
+  });
+
+  /* ============================================================
+     3. DUST PARTICLES IN BEAMS
+     ============================================================ */
+  function spawnDust(){
+    const host = document.getElementById('dust');
+    const N = 40;
+    for (let i=0;i<N;i++){
+      const s = document.createElement('span');
+      const left = 20 + Math.random()*60;       // %
+      const dur = 14 + Math.random()*18;        // s
+      const delay = -Math.random()*dur;          // negative for staggered start
+      const dx = (Math.random()*200 - 100);     // px sideways drift
+      const size = 1 + Math.random()*2;
+      s.style.left = left + '%';
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = delay + 's';
+      s.style.setProperty('--dx', dx + 'px');
+      s.style.opacity = (0.3 + Math.random()*0.7);
+      host.appendChild(s);
+    }
+  }
+
+  /* ============================================================
+     4. SCROLL REVEAL
+     ============================================================ */
+  function observeReveals(){
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(el => io.observe(el));
+  }
+
+  /* ============================================================
+     5. WEB AUDIO — Ambient drone + ignition sfx
+     ============================================================ */
+  let audioCtx = null;
+  let musicGain = null;
+  let musicNodes = [];
+  let musicPlaying = false;
+
+  function ensureCtx(){
+    if (audioCtx) return audioCtx;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AC();
+    return audioCtx;
+  }
+
+  function playIgnitionSfx(){
+    const ctx = ensureCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const now = ctx.currentTime;
+
+    // Click: filtered noise burst
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.15, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i=0;i<data.length;i++){
+      data[i] = (Math.random()*2-1) * Math.pow(1 - i/data.length, 3);
+    }
+    const click = ctx.createBufferSource(); click.buffer = buf;
+    const clickFilt = ctx.createBiquadFilter(); clickFilt.type = 'bandpass'; clickFilt.frequency.value = 1800; clickFilt.Q.value = 6;
+    const clickGain = ctx.createGain(); clickGain.gain.value = 0.4;
+    click.connect(clickFilt).connect(clickGain).connect(ctx.destination);
+    click.start(now);
+
+    // Whoosh: filter sweep on pink-ish noise
+    const wBuf = ctx.createBuffer(1, ctx.sampleRate * 1.2, ctx.sampleRate);
+    const wData = wBuf.getChannelData(0);
+    let lp = 0;
+    for (let i=0;i<wData.length;i++){
+      lp = lp*0.96 + (Math.random()*2-1)*0.04;
+      wData[i] = lp * (1 - i/wData.length);
+    }
+    const wh = ctx.createBufferSource(); wh.buffer = wBuf;
+    const wFilt = ctx.createBiquadFilter(); wFilt.type = 'lowpass'; wFilt.frequency.value = 200; wFilt.Q.value = 2;
+    const wGain = ctx.createGain(); wGain.gain.value = 0.0;
+    wh.connect(wFilt).connect(wGain).connect(ctx.destination);
+    wFilt.frequency.linearRampToValueAtTime(2400, now + 0.9);
+    wGain.gain.linearRampToValueAtTime(0.35, now + 0.15);
+    wGain.gain.linearRampToValueAtTime(0.0, now + 1.2);
+    wh.start(now + 0.05);
+  }
+
+  /* Doppler-style pass-by: the moment the car drives through the viewer */
+  function playPassBySfx(){
+    const ctx = ensureCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const now = ctx.currentTime;
+
+    // Long, rising/falling whoosh
+    const len = 1.6;
+    const buf = ctx.createBuffer(1, ctx.sampleRate * len, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    let lp = 0;
+    for (let i=0;i<d.length;i++){
+      lp = lp*0.985 + (Math.random()*2-1)*0.015;
+      d[i] = lp;
+    }
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const filt = ctx.createBiquadFilter(); filt.type = 'bandpass'; filt.Q.value = 3; filt.frequency.value = 220;
+    const g = ctx.createGain(); g.gain.value = 0;
+    src.connect(filt).connect(g).connect(ctx.destination);
+    // Sweep frequency up then down — doppler
+    filt.frequency.linearRampToValueAtTime(900, now + 0.6);
+    filt.frequency.linearRampToValueAtTime(180, now + 1.6);
+    g.gain.linearRampToValueAtTime(0.45, now + 0.55);
+    g.gain.linearRampToValueAtTime(0.0, now + 1.55);
+    src.start(now);
+  }
+
+  function startMusic(){
+    if (musicPlaying) return;
+    const ctx = ensureCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    const master = ctx.createGain();
+    master.gain.value = 0;
+    master.connect(ctx.destination);
+    musicGain = master;
+
+    const oscs = [];
+    const reverb = ctx.createConvolver();
+    const reverbLen = 3.5 * ctx.sampleRate;
+    const reverbBuf = ctx.createBuffer(2, reverbLen, ctx.sampleRate);
+    for (let ch = 0; ch < 2; ch++){
+      const d = reverbBuf.getChannelData(ch);
+      for (let i = 0; i < reverbLen; i++){
+        d[i] = (Math.random()*2-1) * Math.pow(1 - i/reverbLen, 2.2);
+      }
+    }
+    reverb.buffer = reverbBuf;
+    const reverbGain = ctx.createGain(); reverbGain.gain.value = 0.3;
+    reverb.connect(reverbGain).connect(master);
+    const dry = ctx.createGain(); dry.gain.value = 0.7;
+    dry.connect(master);
+
+    const filt = ctx.createBiquadFilter();
+    filt.type = 'lowpass';
+    filt.frequency.value = 1200;
+    filt.Q.value = 0.7;
+    filt.connect(dry);
+    filt.connect(reverb);
+
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.04;
+    const lfoGain = ctx.createGain(); lfoGain.gain.value = 350;
+    lfo.connect(lfoGain).connect(filt.frequency);
+    lfo.start();
+
+    const padFreqs = [130.81, 196, 261.63, 329.63, 392];
+    padFreqs.forEach((f, i) => {
+      const o = ctx.createOscillator();
+      o.type = i < 2 ? 'triangle' : 'sine';
+      o.frequency.value = f;
+      o.detune.value = (Math.random()-0.5) * 10;
+      const g = ctx.createGain();
+      g.gain.value = i === 0 ? 0.06 : (i < 3 ? 0.04 : 0.025);
+      o.connect(g).connect(filt);
+      o.start();
+      oscs.push(o);
+    });
+
+    const shimmer = ctx.createOscillator(); shimmer.type = 'sine'; shimmer.frequency.value = 523.25;
+    const shimG = ctx.createGain(); shimG.gain.value = 0;
+    shimmer.connect(shimG).connect(filt);
+    shimmer.start();
+    const shimLfo = ctx.createOscillator(); shimLfo.frequency.value = 0.08;
+    const shimAmp = ctx.createGain(); shimAmp.gain.value = 0.012;
+    shimLfo.connect(shimAmp).connect(shimG.gain);
+    shimLfo.start();
+
+    const sub = ctx.createOscillator(); sub.type = 'sine'; sub.frequency.value = 65.41;
+    const subG = ctx.createGain(); subG.gain.value = 0.05;
+    sub.connect(subG).connect(master);
+    sub.start();
+
+    musicNodes = { oscs, filt, lfo, lfoGain, sub, subG, shimmer, shimG, shimLfo, shimAmp, master };
+
+    const now = ctx.currentTime;
+    master.gain.linearRampToValueAtTime(0.18, now + 5);
+    musicPlaying = true;
+    audioToggle.classList.add('playing');
+    audioToggle.classList.remove('muted');
+  }
+
+  function stopMusic(){
+    if (!musicPlaying) return;
+    const ctx = audioCtx;
+    if (!ctx || !musicNodes) return;
+    const now = ctx.currentTime;
+    musicGain.gain.cancelScheduledValues(now);
+    musicGain.gain.linearRampToValueAtTime(0, now + 0.6);
+    setTimeout(() => {
+      try{
+        musicNodes.oscs.forEach(o => o.stop());
+        musicNodes.lfo.stop();
+        musicNodes.sub.stop();
+        musicNodes.shimmer.stop();
+        musicNodes.shimLfo.stop();
+      }catch(e){}
+      musicPlaying = false;
+    }, 700);
+    audioToggle.classList.remove('playing');
+    audioToggle.classList.add('muted');
+  }
+
+  audioToggle.addEventListener('click', () => {
+    if (musicPlaying) stopMusic();
+    else startMusic();
+  });
+
+  /* ============================================================
+     6.5 PARTICLE FIELD — calm, drifting motes across the site
+     ============================================================ */
+  function startParticles(){
+    const cvs = document.getElementById('pCanvas');
+    if (!cvs || cvs._running) return;
+    cvs._running = true;
+    const ctx = cvs.getContext('2d');
+    let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let parts = [];
+
+    function resize(){
+      W = window.innerWidth; H = window.innerHeight;
+      cvs.width = W * dpr; cvs.height = H * dpr;
+      cvs.style.width = W + 'px'; cvs.style.height = H + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      const target = Math.min(80, Math.max(30, Math.round(W*H/20000)));
+      while(parts.length < target) parts.push(makeParticle(true));
+      if (parts.length > target) parts.length = target;
+    }
+    function makeParticle(initial){
+      return {
+        x: Math.random()*W,
+        y: initial ? Math.random()*H : H + 20 + Math.random()*60,
+        r: 0.8 + Math.random()*1.8,
+        vy: -0.05 - Math.random()*0.18,
+        vx: (Math.random()-0.5)*0.08,
+        a: 0.1 + Math.random()*0.35,
+        tw: Math.random()*Math.PI*2,
+        tws: 0.005 + Math.random()*0.012,
+        warm: Math.random() < 0.35
+      };
+    }
+    function frame(){
+      ctx.clearRect(0,0,W,H);
+      for (const p of parts){
+        p.y += p.vy; p.x += p.vx; p.tw += p.tws;
+        if (p.y < -10 || p.x < -10 || p.x > W+10){
+          Object.assign(p, makeParticle(false));
+        }
+        const alpha = p.a * (0.6 + Math.sin(p.tw)*0.4);
+        const color = p.warm
+          ? `rgba(255,225,170,${alpha})`
+          : `rgba(245,243,238,${alpha*0.7})`;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+    frame();
+  }
+
+  /* ============================================================
+     7. ADD TO CALENDAR (downloads .ics)
+     ============================================================ */
+  document.getElementById('addCal').addEventListener('click', (e) => {
+    e.preventDefault();
+    // ICS uses UTC stamps
+    const start = '20260618T133000Z';
+    const end   = '20260618T173000Z';
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Sterling//Electric Reveal//EN',
+      'BEGIN:VEVENT',
+      'UID:' + Date.now() + '@sterling.lk',
+      'DTSTAMP:' + start,
+      'DTSTART:' + start,
+      'DTEND:' + end,
+      'SUMMARY:Sterling — Electric Reveal',
+      'DESCRIPTION:An exclusive launch of a new sub-brand and electric mobility innovation by Sterling Automobiles Lanka.',
+      'LOCATION:Havelock City Mall, Colombo, Sri Lanka',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'sterling-electric-reveal.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+</script>
+</body>
+</html>
