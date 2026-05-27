@@ -63,12 +63,12 @@
     opacity:0;visibility:hidden;pointer-events:none;
   }
   .ignition.zooming{
-    transform:scale(1.06) translateZ(0);
-    transition:transform 3.5s cubic-bezier(0.22,0.61,0.36,1), opacity 2.2s cubic-bezier(0.22,0.61,0.36,1) 1.4s, visibility 0s linear 3.6s;
+    transform:scale(1.12) translateZ(0);
+    transition:transform 1.6s cubic-bezier(0.22,0.61,0.36,1), opacity 1s cubic-bezier(0.22,0.61,0.36,1) 0.8s, visibility 0s linear 1.8s;
     will-change:transform, opacity;
   }
   .ignition.zooming.gone{
-    opacity:0;transform:scale(1.2) translateZ(0);
+    opacity:0;transform:scale(1.25) translateZ(0);
   }
 
   .ignition .vignette{
@@ -1340,42 +1340,35 @@
     keyBtn.classList.add('turning');
     playIgnitionSfx();
 
-    // Phase 1: music starts
+    // Phase 1: music + zoom starts together
     setTimeout(() => {
       startMusic();
+      ignition.classList.add('zooming');
     }, skipDelay ? 0 : 300);
 
-    // Phase 2: slow zoom begins — car glides forward
-    setTimeout(() => {
-      ignition.classList.add('zooming');
-    }, skipDelay ? 100 : 800);
-
-    // Phase 3: gentle flash
+    // Phase 2: flash
     setTimeout(() => {
       flash.classList.add('on');
-    }, skipDelay ? 350 : 3000);
+    }, skipDelay ? 200 : 1200);
 
-    // Phase 4: overlay dissolves, site reveals
+    // Phase 3: dissolve + reveal
     setTimeout(() => {
       ignition.classList.add('gone');
-    }, skipDelay ? 500 : 3600);
-
-    setTimeout(() => {
       flash.classList.remove('on');
       main.classList.add('revealed');
       topnav.classList.add('revealed');
       audioToggle.classList.add('shown');
       particles.classList.add('shown');
       startParticles();
-    }, skipDelay ? 600 : 4000);
+    }, skipDelay ? 400 : 1800);
 
-    // Phase 5: clean up
+    // Phase 4: clean up
     setTimeout(() => {
       stage.classList.remove('lit');
       stage.classList.remove('passing');
       stage.classList.add('gone');
       observeReveals();
-    }, skipDelay ? 900 : 5000);
+    }, skipDelay ? 700 : 2800);
   }
 
   keyBtn.addEventListener('click', () => reveal(false));
