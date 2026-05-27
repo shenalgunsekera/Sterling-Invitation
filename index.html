@@ -1341,28 +1341,22 @@
     keyBtn.classList.add('turning');
     playIgnitionSfx();
 
-    // Music + zoom begin
+    // Music + zoom
     setTimeout(() => {
       startMusic();
       ignition.classList.add('zooming');
     }, skipDelay ? 0 : 250);
 
-    // Soft flash
-    setTimeout(() => {
-      flash.classList.add('on');
-    }, skipDelay ? 150 : 800);
-
-    // Reveal
+    // Clean dissolve into site
     setTimeout(() => {
       ignition.classList.add('gone');
-      flash.classList.remove('on');
       main.classList.add('revealed');
       topnav.classList.add('revealed');
       audioToggle.classList.add('shown');
       particles.classList.add('shown');
       startParticles();
       observeReveals();
-    }, skipDelay ? 400 : 1500);
+    }, skipDelay ? 350 : 1400);
   }
 
   keyBtn.addEventListener('click', () => reveal(false));
