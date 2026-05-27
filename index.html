@@ -90,7 +90,7 @@
 
   @media (max-width:700px){
     .ignition .car-image{inset:0}
-    .ignition .car-image img{object-position:center 40%}
+    .ignition .car-image img{object-position:center 55%}
     .ign-stack{margin-top:0;gap:32px;padding:0 24px}
     .ign-eyebrow{font-size:8.5px;letter-spacing:0.4em}
     .ign-title{font-size:24px}
@@ -1497,18 +1497,39 @@
     src.start(now);
   }
 
+  const bgAudio = document.getElementById('bgMusic');
+  bgAudio.volume = 0;
+
   function startMusic(){
     if (musicPlaying) return;
-    const audio = document.getElementById('bgMusic');
-    audio.volume = 0;
-    audio.play().then(() => {
-      let vol = 0;
-      const fadeIn = setInterval(() => {
-        vol = Math.min(1, vol + 0.02);
-        audio.volume = vol;
-        if (vol >= 1) clearInterval(fadeIn);
-      }, 50);
-    }).catch(() => {});
+    bgAudio.currentTime = 0;
+    bgAudio.volume = 0;
+    const playAttempt = bgAudio.play();
+    if (playAttempt !== undefined){
+      playAttempt.then(() => {
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+          vol = Math.min(1, vol + 0.02);
+          bgAudio.volume = vol;
+          if (vol >= 1) clearInterval(fadeIn);
+        }, 40);
+      }).catch(() => {
+        const resume = () => {
+          bgAudio.play().then(() => {
+            let vol = 0;
+            const fadeIn = setInterval(() => {
+              vol = Math.min(1, vol + 0.02);
+              bgAudio.volume = vol;
+              if (vol >= 1) clearInterval(fadeIn);
+            }, 40);
+          }).catch(() => {});
+          document.removeEventListener('click', resume);
+          document.removeEventListener('touchstart', resume);
+        };
+        document.addEventListener('click', resume, {once:true});
+        document.addEventListener('touchstart', resume, {once:true});
+      });
+    }
     musicPlaying = true;
     audioToggle.classList.add('playing');
     audioToggle.classList.remove('muted');
@@ -1516,12 +1537,11 @@
 
   function stopMusic(){
     if (!musicPlaying) return;
-    const audio = document.getElementById('bgMusic');
-    let vol = audio.volume;
+    let vol = bgAudio.volume;
     const fadeOut = setInterval(() => {
       vol = Math.max(0, vol - 0.05);
-      audio.volume = vol;
-      if (vol <= 0){ clearInterval(fadeOut); audio.pause(); }
+      bgAudio.volume = vol;
+      if (vol <= 0){ clearInterval(fadeOut); bgAudio.pause(); }
     }, 30);
     musicPlaying = false;
     audioToggle.classList.remove('playing');
