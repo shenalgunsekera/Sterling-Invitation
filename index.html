@@ -1267,6 +1267,9 @@
   </footer>
 </main>
 
+<!-- Background music -->
+<audio id="bgMusic" src="bg-music.mp3" preload="auto" loop></audio>
+
 <!-- Audio toggle -->
 <button class="audio-toggle muted" id="audioToggle" aria-label="Toggle background music" title="Toggle music">
   <span class="bars"><span></span><span></span><span></span><span></span></span>
@@ -1496,72 +1499,16 @@
 
   function startMusic(){
     if (musicPlaying) return;
-    const ctx = ensureCtx();
-    if (ctx.state === 'suspended') ctx.resume();
-    const master = ctx.createGain();
-    master.gain.value = 0;
-    master.connect(ctx.destination);
-    musicGain = master;
-
-    const oscs = [];
-    const reverb = ctx.createConvolver();
-    const reverbLen = 3.5 * ctx.sampleRate;
-    const reverbBuf = ctx.createBuffer(2, reverbLen, ctx.sampleRate);
-    for (let ch = 0; ch < 2; ch++){
-      const d = reverbBuf.getChannelData(ch);
-      for (let i = 0; i < reverbLen; i++){
-        d[i] = (Math.random()*2-1) * Math.pow(1 - i/reverbLen, 2.2);
-      }
-    }
-    reverb.buffer = reverbBuf;
-    const reverbGain = ctx.createGain(); reverbGain.gain.value = 0.3;
-    reverb.connect(reverbGain).connect(master);
-    const dry = ctx.createGain(); dry.gain.value = 0.7;
-    dry.connect(master);
-
-    const filt = ctx.createBiquadFilter();
-    filt.type = 'lowpass';
-    filt.frequency.value = 1200;
-    filt.Q.value = 0.7;
-    filt.connect(dry);
-    filt.connect(reverb);
-
-    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.04;
-    const lfoGain = ctx.createGain(); lfoGain.gain.value = 350;
-    lfo.connect(lfoGain).connect(filt.frequency);
-    lfo.start();
-
-    const padFreqs = [130.81, 196, 261.63, 329.63, 392];
-    padFreqs.forEach((f, i) => {
-      const o = ctx.createOscillator();
-      o.type = i < 2 ? 'triangle' : 'sine';
-      o.frequency.value = f;
-      o.detune.value = (Math.random()-0.5) * 10;
-      const g = ctx.createGain();
-      g.gain.value = i === 0 ? 0.06 : (i < 3 ? 0.04 : 0.025);
-      o.connect(g).connect(filt);
-      o.start();
-      oscs.push(o);
-    });
-
-    const shimmer = ctx.createOscillator(); shimmer.type = 'sine'; shimmer.frequency.value = 523.25;
-    const shimG = ctx.createGain(); shimG.gain.value = 0;
-    shimmer.connect(shimG).connect(filt);
-    shimmer.start();
-    const shimLfo = ctx.createOscillator(); shimLfo.frequency.value = 0.08;
-    const shimAmp = ctx.createGain(); shimAmp.gain.value = 0.012;
-    shimLfo.connect(shimAmp).connect(shimG.gain);
-    shimLfo.start();
-
-    const sub = ctx.createOscillator(); sub.type = 'sine'; sub.frequency.value = 65.41;
-    const subG = ctx.createGain(); subG.gain.value = 0.05;
-    sub.connect(subG).connect(master);
-    sub.start();
-
-    musicNodes = { oscs, filt, lfo, lfoGain, sub, subG, shimmer, shimG, shimLfo, shimAmp, master };
-
-    const now = ctx.currentTime;
-    master.gain.linearRampToValueAtTime(0.18, now + 5);
+    const audio = document.getElementById('bgMusic');
+    audio.volume = 0;
+    audio.play().then(() => {
+      let vol = 0;
+      const fadeIn = setInterval(() => {
+        vol = Math.min(1, vol + 0.02);
+        audio.volume = vol;
+        if (vol >= 1) clearInterval(fadeIn);
+      }, 50);
+    }).catch(() => {});
     musicPlaying = true;
     audioToggle.classList.add('playing');
     audioToggle.classList.remove('muted');
@@ -1569,21 +1516,14 @@
 
   function stopMusic(){
     if (!musicPlaying) return;
-    const ctx = audioCtx;
-    if (!ctx || !musicNodes) return;
-    const now = ctx.currentTime;
-    musicGain.gain.cancelScheduledValues(now);
-    musicGain.gain.linearRampToValueAtTime(0, now + 0.6);
-    setTimeout(() => {
-      try{
-        musicNodes.oscs.forEach(o => o.stop());
-        musicNodes.lfo.stop();
-        musicNodes.sub.stop();
-        musicNodes.shimmer.stop();
-        musicNodes.shimLfo.stop();
-      }catch(e){}
-      musicPlaying = false;
-    }, 700);
+    const audio = document.getElementById('bgMusic');
+    let vol = audio.volume;
+    const fadeOut = setInterval(() => {
+      vol = Math.max(0, vol - 0.05);
+      audio.volume = vol;
+      if (vol <= 0){ clearInterval(fadeOut); audio.pause(); }
+    }, 30);
+    musicPlaying = false;
     audioToggle.classList.remove('playing');
     audioToggle.classList.add('muted');
   }
