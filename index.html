@@ -56,17 +56,19 @@
     display:grid;place-items:center;
     transition:opacity 1.4s ease 0.4s, visibility 0s linear 1.8s;
     overflow:hidden;
+    transform:translateZ(0);
+    backface-visibility:hidden;
   }
   .ignition.gone{
     opacity:0;visibility:hidden;pointer-events:none;
   }
   .ignition.zooming{
-    transform:scale(1.08);
-    filter:brightness(1.3);
-    transition:transform 2.5s cubic-bezier(0.25,0.1,0.25,1), filter 2s ease, opacity 1.8s ease 1s, visibility 0s linear 2.8s;
+    transform:scale(1.06) translateZ(0);
+    transition:transform 3.5s cubic-bezier(0.22,0.61,0.36,1), opacity 2.2s cubic-bezier(0.22,0.61,0.36,1) 1.4s, visibility 0s linear 3.6s;
+    will-change:transform, opacity;
   }
   .ignition.zooming.gone{
-    opacity:0;transform:scale(1.25);filter:brightness(2);
+    opacity:0;transform:scale(1.2) translateZ(0);
   }
 
   .ignition .vignette{
@@ -330,11 +332,12 @@
   /* The headlamp "flash" plate — short white wash as the car passes */
   .flash{
     position:fixed;inset:0;z-index:55;pointer-events:none;
-    background:radial-gradient(ellipse 60% 60% at 50% 70%, rgba(255,245,220,0.85), rgba(255,235,200,0.5) 25%, transparent 65%);
+    background:radial-gradient(ellipse 70% 70% at 50% 60%, rgba(255,248,230,0.6), rgba(255,240,210,0.3) 30%, transparent 65%);
     opacity:0;mix-blend-mode:screen;
-    transition:opacity .9s ease;
+    transition:opacity 1.5s cubic-bezier(0.22,0.61,0.36,1);
+    will-change:opacity;
   }
-  .flash.on{opacity:1;transition:opacity .35s ease}
+  .flash.on{opacity:1;transition:opacity 0.8s cubic-bezier(0.22,0.61,0.36,1)}
 
   /* Atmospheric dust drifting through beams */
   .dust{position:absolute;inset:0;opacity:0;transition:opacity 2.5s ease 1s}
@@ -367,7 +370,8 @@
      =========================================================== */
   main{
     position:relative;z-index:10;
-    opacity:0;transition:opacity 1.6s ease 0.6s;
+    opacity:0;transition:opacity 2.2s cubic-bezier(0.22,0.61,0.36,1) 0.4s;
+    will-change:opacity;
   }
   main.revealed{opacity:1}
 
@@ -1336,43 +1340,42 @@
     keyBtn.classList.add('turning');
     playIgnitionSfx();
 
-    // Phase 1: engine sound + music
+    // Phase 1: music starts
     setTimeout(() => {
-      stage.classList.add('lit');
-      spawnDust();
       startMusic();
-    }, skipDelay ? 0 : 400);
+    }, skipDelay ? 0 : 300);
 
-    // Phase 2: slow zoom begins — car comes forward
+    // Phase 2: slow zoom begins — car glides forward
     setTimeout(() => {
       ignition.classList.add('zooming');
-    }, skipDelay ? 150 : 1200);
+    }, skipDelay ? 100 : 800);
 
-    // Phase 3: flash as the car "passes"
+    // Phase 3: gentle flash
     setTimeout(() => {
-      stage.classList.add('passing');
       flash.classList.add('on');
-      playPassBySfx();
-    }, skipDelay ? 400 : 2400);
+    }, skipDelay ? 350 : 3000);
 
-    // Phase 4: overlay fades, content reveals
+    // Phase 4: overlay dissolves, site reveals
     setTimeout(() => {
       ignition.classList.add('gone');
+    }, skipDelay ? 500 : 3600);
+
+    setTimeout(() => {
       flash.classList.remove('on');
       main.classList.add('revealed');
       topnav.classList.add('revealed');
       audioToggle.classList.add('shown');
       particles.classList.add('shown');
       startParticles();
-    }, skipDelay ? 600 : 3200);
+    }, skipDelay ? 600 : 4000);
 
-    // Phase 5: clean up stage
+    // Phase 5: clean up
     setTimeout(() => {
       stage.classList.remove('lit');
       stage.classList.remove('passing');
       stage.classList.add('gone');
       observeReveals();
-    }, skipDelay ? 1000 : 4200);
+    }, skipDelay ? 900 : 5000);
   }
 
   keyBtn.addEventListener('click', () => reveal(false));
