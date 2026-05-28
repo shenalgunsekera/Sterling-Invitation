@@ -94,7 +94,7 @@
 
   @media (max-width:700px){
     .ignition .car-image{inset:0}
-    .ignition .car-image img{object-position:center 55%}
+    .ignition .car-image img{object-position:center 78%}
     .ign-stack{margin-top:0;gap:32px;padding:0 24px}
     .ign-eyebrow{font-size:8.5px;letter-spacing:0.4em}
     .ign-title{font-size:24px}
@@ -811,13 +811,14 @@
     border:0;border-radius:3px;cursor:pointer;
     transition:transform .35s ease, box-shadow .35s ease, background .35s ease;
   }
-  .btn::after{content:"";width:18px;height:1px;background:var(--bg);transition:width .35s ease}
+  .btn:not(.ghost)::after{content:"";width:18px;height:1px;background:var(--bg);transition:width .35s ease}
   .btn:hover{background:var(--beam);box-shadow:0 24px 48px -16px rgba(245,213,140,0.4);transform:translateY(-2px)}
-  .btn:hover::after{width:28px}
+  .btn:not(.ghost):hover::after{width:28px}
+  .btn .ico{transition:transform .35s ease}
+  .btn:hover .ico{transform:scale(1.1)}
   .btn.ghost{
     background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:3px;
   }
-  .btn.ghost::after{background:var(--ink)}
   .btn.ghost:hover{background:rgba(245,243,238,0.05);border-color:var(--ink-soft);box-shadow:none;transform:translateY(-2px)}
 
   .rsvp .details-row{
@@ -1260,14 +1261,15 @@
       <p class="copy reveal d2">This is an invitation-only evening. Please confirm your attendance so we can prepare your place at the reveal.</p>
 
       <div class="actions reveal d3">
-        <a class="btn ghost" id="addCal" href="#">Add to Calendar</a>
-      </div>
-
-      <div class="details-row">
-        <div class="cell reveal d1"><div class="k">Date</div><div class="v">18 June 2026</div></div>
-        <div class="cell reveal d2"><div class="k">Time</div><div class="v">7:00 PM</div></div>
-        <div class="cell reveal d3"><div class="k">Venue</div><div class="v">Havelock City Mall</div></div>
-        <div class="cell reveal d4"><div class="k">City</div><div class="v">Colombo, Sri Lanka</div></div>
+        <a class="btn ghost" id="addCal" href="#">
+          Add to Calendar
+          <svg class="ico" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="12" height="11" rx="1.5"/>
+            <path d="M2 6 H14"/>
+            <path d="M5 1.5 V4"/>
+            <path d="M11 1.5 V4"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
