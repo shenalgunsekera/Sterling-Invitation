@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="logo.png" fetchpriority="high" />
+<link rel="preload" as="image" href="logo2.png" />
 <link rel="preload" as="image" href="Car silloete.png" />
 <link rel="preload" as="image" href="Car-mobile-view.png" />
 <link rel="preload" as="image" href="Hero Section image.png" />
@@ -401,11 +402,12 @@
     display:flex;align-items:center;gap:16px;
   }
   .topnav .nav-logo{
-    height:26px;width:auto;object-fit:contain;
+    height:34px;width:auto;object-fit:contain;
     filter:drop-shadow(0 1px 6px rgba(0,0,0,0.5));
   }
+  .topnav .nav-logo2{height:46px}
   .topnav .nav-divider{
-    width:1px;height:22px;background:var(--line);
+    width:1px;height:34px;background:var(--line);
   }
   .topnav .meta{
     font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
@@ -422,7 +424,10 @@
   }
   @media (max-width:760px){
     .topnav .meta{gap:14px;font-size:9px;letter-spacing:0.25em}
-    .topnav .nav-logo{height:20px}
+    .topnav .nav-logo{height:24px}
+    .topnav .nav-logo2{height:34px}
+    .topnav .nav-divider{height:26px}
+    .topnav .mark{gap:12px}
   }
 
   /* ----- Hero ----- */
@@ -1102,10 +1107,8 @@
 <nav class="topnav" id="topnav">
   <div class="mark">
     <img class="nav-logo" src="logo.png" alt="Sterling Automobiles" />
-    <!-- Second logo (optional): uncomment and set src when ready
     <span class="nav-divider"></span>
-    <img class="nav-logo" src="logo2.png" alt="" />
-    -->
+    <img class="nav-logo nav-logo2" src="logo2.png" alt="Sterling After Care Guarantee" />
   </div>
   <div class="meta">
     <span class="live">Reveal Imminent</span>
