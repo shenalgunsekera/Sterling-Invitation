@@ -451,8 +451,8 @@
   }
   @media (max-width:700px){
     .hero::before{
-      background-size:135% auto;
-      background-position:center 34%;
+      background-size:cover;
+      background-position:center center;
     }
   }
   /* Dark gradient overlay for text readability */
@@ -733,6 +733,7 @@
     border-top:1px solid var(--line);
   }
   .about .brand-feature img{height:clamp(100px,11vw,160px)}
+  .about .partner-mobile-only{display:none}
   .about-grid .body p{
     font-size:17.5px;line-height:1.78;color:var(--ink-soft);
     margin-bottom:22px;max-width:60ch;
@@ -1076,10 +1077,10 @@
     .countdown .num{font-size:64px}
     .countdown .unit{padding:32px 10px 24px}
     .countdown .footnote{font-size:9px;letter-spacing:0.2em;line-height:1.6}
-    .about .about-head{flex-direction:column;align-items:flex-start;gap:48px}
-    .about .about-partner-tr{width:100%}
-    .about .about-partner-tr img{height:clamp(110px,22vw,160px)}
-    .about .brand-feature img{height:clamp(90px,20vw,140px)}
+    .about .about-partner-tr{display:none}
+    .about .partner-mobile-only{display:flex}
+    .about .brand-feature{display:flex;flex-direction:column;gap:48px}
+    .about .brand-feature img{height:clamp(90px,20vw,150px)}
     .about-grid{margin-top:56px;gap:44px}
     .about-grid .lead{font-size:22px}
     .about-grid .body p{font-size:15.5px}
@@ -1315,9 +1316,15 @@
           <p class="lead reveal d1">
             For one evening, Havelock City Mall becomes the launchpad for what comes next in Sri Lankan mobility.
           </p>
-          <div class="brand-feature about-partner reveal d2">
-            <span class="partner-label">In partnership with</span>
-            <img src="Livan-logo.png" alt="Livan" />
+          <div class="brand-feature reveal d2">
+            <div class="about-partner">
+              <span class="partner-label">In partnership with</span>
+              <img src="Livan-logo.png" alt="Livan" />
+            </div>
+            <div class="about-partner partner-mobile-only">
+              <span class="partner-label">In partnership with</span>
+              <img src="Henrey-logo.png" alt="Henrey" />
+            </div>
           </div>
         </div>
         <div class="body">
