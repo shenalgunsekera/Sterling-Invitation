@@ -108,6 +108,7 @@
     .key-btn .ring.r3{inset:-32px}
     .ign-hint{font-size:8.5px;letter-spacing:0.3em}
     .skip{top:12px;right:12px;font-size:7.5px;padding:6px 10px}
+    .ign-logo{top:16px;left:18px;height:26px}
   }
 
   /* Scan line removed per design feedback. */
@@ -121,7 +122,8 @@
   }
 
   .ign-logo{
-    width:auto;height:clamp(38px,6vw,56px);
+    position:absolute;top:28px;left:32px;z-index:3;
+    width:auto;height:clamp(30px,4vw,44px);
     object-fit:contain;
     filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));
   }
@@ -1028,8 +1030,9 @@
   </div>
 
 
+  <img class="ign-logo" src="logo.png" alt="Sterling Automobiles" fetchpriority="high" />
+
   <div class="ign-stack">
-    <img class="ign-logo" src="logo.png" alt="Sterling Automobiles" fetchpriority="high" />
     <h1 class="ign-title">The <em>Reveal</em> Awaits</h1>
 
     <button class="key-btn" id="keyBtn" aria-label="Engine start — begin the experience">
