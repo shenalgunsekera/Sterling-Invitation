@@ -1003,7 +1003,43 @@
     transform:translateY(-2px);
   }
   .footer-social .social-sep{width:1px;height:40px;background:var(--line)}
+
+  /* Footer contact person */
+  .footer-contact{
+    text-align:center;
+    padding-bottom:48px;margin-bottom:44px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-contact .contact-label{
+    display:block;
+    font-family:var(--mono);font-size:9px;letter-spacing:0.4em;
+    color:var(--ink-faint);text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .footer-contact .contact-name{
+    font-family:var(--display);font-size:24px;font-weight:400;color:var(--ink);
+    margin-bottom:8px;
+  }
+  .footer-contact .contact-role{
+    font-size:13px;line-height:1.6;color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .footer-contact .contact-links{
+    display:inline-flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:0.15em;
+  }
+  .footer-contact .contact-links a{
+    color:var(--ink-soft);transition:color .3s ease;
+  }
+  .footer-contact .contact-links a:hover{color:var(--beam)}
+  .footer-contact .contact-dot{width:4px;height:4px;border-radius:50%;background:var(--ink-faint)}
+
   @media (max-width:600px){
+    .footer-contact{padding-bottom:36px;margin-bottom:32px}
+    .footer-contact .contact-name{font-size:21px}
+    .footer-contact .contact-role{font-size:12px;padding:0 12px}
+    .footer-contact .contact-links{flex-direction:column;gap:10px}
+    .footer-contact .contact-dot{display:none}
     .footer-social{
       flex-direction:column;align-items:center;
       gap:22px;padding-bottom:36px;margin-bottom:32px;
@@ -1261,9 +1297,9 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="eyebrow">Sterling Automobiles · Sub-brand Reveal</div>
+      <div class="eyebrow">Sterling Automobiles</div>
       <h1 class="wordmark">Unveiling the<br><em>Future of Mobility.</em></h1>
-      <p class="tagline">A new era of electric mobility unfolds under one roof, for one exclusive night.</p>
+      <p class="tagline">A new era of future mobility unfolds under one roof, for one exclusive night.</p>
 
       <div class="meta-row">
         <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong><span class="tz">GMT+5:30 · Sri Lanka</span></div>
@@ -1501,6 +1537,16 @@
           </div>
         </div>
       </div>
+      <div class="footer-contact">
+        <span class="contact-label">Event Enquiries</span>
+        <div class="contact-name">Rashmika Liyanage</div>
+        <div class="contact-role">Assistant Manager — Marketing · Sterling Automobiles Lanka (Pvt) Ltd</div>
+        <div class="contact-links">
+          <a href="tel:+94775744653">+94 77 574 4653</a>
+          <span class="contact-dot"></span>
+          <a href="mailto:rashmika@sterling.lk">rashmika@sterling.lk</a>
+        </div>
+      </div>
       <div class="row">
         <div class="mark footer-logos">
           <img src="logo.png" alt="Sterling Automobiles" />
@@ -1508,7 +1554,6 @@
           <img class="footer-logo2" src="logo2.png" alt="Sterling After Care Guarantee" />
         </div>
         <div>© 2026 · Sterling Automobiles Lanka (Pvt) Ltd</div>
-        <div>Electric Reveal · By Invitation</div>
       </div>
     </div>
   </footer>
