@@ -432,6 +432,12 @@
     opacity:0;
     transition:opacity 2s ease 1.2s;
   }
+  @media (max-width:700px){
+    .hero::before{
+      background-size:135% auto;
+      background-position:center 34%;
+    }
+  }
   /* Dark gradient overlay for text readability */
   .hero::after{
     content:"";position:absolute;inset:0;
@@ -493,6 +499,10 @@
   .hero .meta-row .cell strong{
     font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:0.02em;
     color:var(--ink);text-transform:none;font-style:italic;
+  }
+  .hero .meta-row .cell .tz{
+    font-family:var(--mono);font-size:8px;letter-spacing:0.3em;
+    color:var(--ink-faint);text-transform:uppercase;margin-top:2px;
   }
   .hero .scroll-hint{display:none}
 
@@ -746,6 +756,11 @@
   }
   .venue-card .row .v{
     font-family:var(--display);font-size:22px;font-weight:400;text-align:right;
+  }
+  .venue-card .tz-note{
+    font-family:var(--mono);font-size:9px;letter-spacing:0.25em;
+    color:var(--ink-faint);text-transform:uppercase;
+    margin-top:-8px;
   }
   .venue-card .directions{
     display:inline-flex;align-items:center;justify-content:space-between;
@@ -1096,7 +1111,7 @@
       <p class="tagline">The next chapter in smart, sustainable mobility&nbsp;— revealed under one roof, for one night only.</p>
 
       <div class="meta-row">
-        <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong></div>
+        <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong><span class="tz">GMT+5:30 · Sri Lanka</span></div>
         <div class="cell">Where<strong>Havelock City Mall, Colombo</strong></div>
         <div class="cell">Attire<strong>Smart Evening</strong></div>
       </div>
@@ -1235,6 +1250,7 @@
           <div class="row"><span class="k">Reveal</span><span class="v">7:00 PM</span></div>
           <div class="row"><span class="k">Valet</span><span class="v">Available on-site</span></div>
         </div>
+        <div class="tz-note">All times in Sri Lanka Standard Time · GMT+5:30</div>
         <a class="directions" href="https://www.google.com/maps/dir/?api=1&destination=Havelock+City+Mall+Colombo" target="_blank" rel="noopener">
           Open in Maps
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M3 11 L11 3"/><path d="M5 3 H11 V9"/></svg>
@@ -1246,7 +1262,7 @@
           loading="lazy"
           allow="fullscreen"
           referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Havelock+City+Mall,+Colombo+Sri+Lanka&output=embed&z=16">
+          src="https://maps.google.com/maps?q=Havelock%20City%20Mall%20Colombo&t=&z=16&ie=UTF8&iwloc=&output=embed">
         </iframe>
       </div>
     </div>
@@ -1258,7 +1274,7 @@
     <div class="container">
       <div class="section-num reveal"><span>05</span><span>The Invitation</span></div>
       <h2 class="section-title reveal d1">Your seat,<br><em>reserved.</em></h2>
-      <p class="copy reveal d2">This is an invitation-only evening. Please confirm your attendance so we can prepare your place at the reveal.</p>
+      <p class="copy reveal d2">Some evenings are worth remembering before they even begin. Mark the date in your calendar, and let the moment of reveal find you exactly where you belong.</p>
 
       <div class="actions reveal d3">
         <a class="btn ghost" id="addCal" href="#">
