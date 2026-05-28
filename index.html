@@ -9,6 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="logo.png" fetchpriority="high" />
 <link rel="preload" as="image" href="logo2.png" />
+<link rel="preload" as="image" href="Livan-logo.png" />
+<link rel="preload" as="image" href="Henrey-logo.png" />
 <link rel="preload" as="image" href="Car silloete.png" />
 <link rel="preload" as="image" href="Car-mobile-view.png" />
 <link rel="preload" as="image" href="Hero Section image.png" />
@@ -436,7 +438,7 @@
     position:relative;
     background:var(--sec-hero);
     display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
-    padding:0 clamp(24px,5vw,60px) clamp(48px,6vh,80px);
+    padding:0 clamp(24px,5vw,60px) clamp(80px,11vh,120px);
     text-align:center;
     overflow:hidden;
   }
@@ -520,6 +522,35 @@
     color:var(--ink-faint);text-transform:uppercase;margin-top:2px;
   }
   .hero .scroll-hint{display:none}
+
+  /* Scroll-down cue — label + bobbing arrow */
+  .scroll-cue{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    color:var(--ink-soft);
+    opacity:0;
+    transition:opacity 1.4s ease 2.8s;
+    cursor:pointer;
+  }
+  main.revealed .scroll-cue{opacity:0.65}
+  .scroll-cue:hover{opacity:1}
+  .scroll-cue.hidden{opacity:0!important;pointer-events:none;transform:translateX(-50%) translateY(10px);transition:opacity .5s ease, transform .5s ease}
+  .scroll-cue-text{
+    font-family:var(--mono);font-size:9px;letter-spacing:0.4em;
+    text-transform:uppercase;
+  }
+  .scroll-cue-arrow{
+    color:var(--beam);
+    animation:cueBob 1.8s ease-in-out infinite;
+  }
+  @keyframes cueBob{
+    0%,100%{transform:translateY(-2px)}
+    50%{transform:translateY(3px)}
+  }
+  @media (max-width:700px){
+    .scroll-cue{bottom:18px}
+  }
 
   main.revealed .hero .eyebrow,
   main.revealed .hero .wordmark,
@@ -668,6 +699,40 @@
     font-size:clamp(22px,2.6vw,34px);
     line-height:1.3;color:var(--ink);
   }
+  /* About header — title left, partner block top-right */
+  .about .about-head{
+    display:flex;align-items:center;justify-content:space-between;gap:56px;
+  }
+  .about .about-head-text{flex:1}
+
+  /* Partner brand blocks — label + large centered logo */
+  .about .about-partner{
+    display:flex;flex-direction:column;align-items:center;gap:22px;
+    text-align:center;
+  }
+  .about .about-partner .partner-label{
+    font-family:var(--mono);font-size:9.5px;letter-spacing:0.34em;
+    color:var(--ink-faint);text-transform:uppercase;
+  }
+  .about .about-partner img{
+    width:auto;object-fit:contain;opacity:0.95;
+    transition:transform .5s cubic-bezier(0.16,1,0.3,1), opacity .5s ease;
+  }
+  .about .about-partner img:hover{transform:scale(1.05);opacity:1}
+
+  /* Top-right partner (Henrey) — centered in the right space */
+  .about .about-partner-tr{
+    flex-shrink:0;width:min(460px,44vw);
+  }
+  .about .about-partner-tr img{height:clamp(120px,14vw,190px)}
+
+  /* Left-column partner (Livan) — fills the gap, centered */
+  .about .brand-feature{
+    margin-top:48px;
+    padding-top:44px;
+    border-top:1px solid var(--line);
+  }
+  .about .brand-feature img{height:clamp(100px,11vw,160px)}
   .about-grid .body p{
     font-size:17.5px;line-height:1.78;color:var(--ink-soft);
     margin-bottom:22px;max-width:60ch;
@@ -723,6 +788,19 @@
   .programme .item .copy p{
     font-size:15.5px;line-height:1.7;color:rgba(26,22,18,0.6);
     max-width:42ch;
+  }
+  /* Artistic closing tile — no number, elegant */
+  .programme .item-closer{
+    grid-template-columns:1fr;
+    justify-content:center;
+    background:rgba(26,22,18,0.02);
+  }
+  .programme .item-closer .copy h3{
+    font-style:italic;color:var(--ember);font-size:28px;
+  }
+  .programme .item-closer .copy p{
+    font-family:var(--display);font-style:italic;font-weight:300;
+    font-size:18px;line-height:1.5;color:rgba(26,22,18,0.7);max-width:38ch;
   }
   @media (max-width:760px){
     .programme{grid-template-columns:1fr}
@@ -890,6 +968,54 @@
   footer .mark{
     font-family:var(--display);font-weight:300;font-size:24px;letter-spacing:0.42em;color:var(--ink);
   }
+  footer .footer-logos{
+    display:flex;align-items:center;gap:16px;
+  }
+  footer .footer-logos img{
+    height:30px;width:auto;object-fit:contain;
+    filter:drop-shadow(0 1px 6px rgba(0,0,0,0.5));
+  }
+  footer .footer-logos .footer-logo2{height:40px}
+  footer .footer-logos .nav-divider{width:1px;height:30px;background:var(--line)}
+  /* Footer social links */
+  .footer-social{
+    display:flex;align-items:center;justify-content:center;
+    gap:clamp(28px,5vw,64px);flex-wrap:wrap;
+    padding-bottom:56px;margin-bottom:48px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-social .social-group{
+    display:flex;align-items:center;gap:20px;
+  }
+  .footer-social .social-name{
+    font-family:var(--display);font-style:italic;font-size:22px;color:var(--ink);
+  }
+  .footer-social .social-icons{display:flex;align-items:center;gap:14px}
+  .footer-social .social-icons a{
+    display:grid;place-items:center;
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--line);color:var(--ink-soft);
+    transition:color .3s ease, border-color .3s ease, background .3s ease, transform .3s ease;
+  }
+  .footer-social .social-icons a:hover{
+    color:var(--bg);background:var(--beam);border-color:var(--beam);
+    transform:translateY(-2px);
+  }
+  .footer-social .social-sep{width:1px;height:40px;background:var(--line)}
+  @media (max-width:600px){
+    .footer-social{
+      flex-direction:column;align-items:center;
+      gap:22px;padding-bottom:36px;margin-bottom:32px;
+    }
+    .footer-social .social-sep{display:none}
+    .footer-social .social-group{
+      width:100%;max-width:300px;
+      justify-content:space-between;gap:16px;
+    }
+    .footer-social .social-name{font-size:20px}
+    .footer-social .social-icons{gap:12px}
+    .footer-social .social-icons a{width:40px;height:40px}
+  }
 
   /* ===========================================================
      MUSIC TOGGLE
@@ -950,12 +1076,18 @@
     .countdown .num{font-size:64px}
     .countdown .unit{padding:32px 10px 24px}
     .countdown .footnote{font-size:9px;letter-spacing:0.2em;line-height:1.6}
-    .about-grid{margin-top:56px;gap:36px}
+    .about .about-head{flex-direction:column;align-items:flex-start;gap:48px}
+    .about .about-partner-tr{width:100%}
+    .about .about-partner-tr img{height:clamp(110px,22vw,160px)}
+    .about .brand-feature img{height:clamp(90px,20vw,140px)}
+    .about-grid{margin-top:56px;gap:44px}
     .about-grid .lead{font-size:22px}
     .about-grid .body p{font-size:15.5px}
     .programme{margin-top:56px}
     .programme .item{padding:36px 28px}
     .programme .item .copy h3{font-size:21px}
+    .programme .item-closer .copy h3{font-size:24px}
+    .programme .item-closer .copy p{font-size:16px}
     .venue-grid{gap:32px;margin-top:48px}
     .venue-card{padding:36px 30px;gap:28px}
     .venue-card .name{font-size:34px}
@@ -969,9 +1101,12 @@
     .rsvp .details-row{margin-top:64px}
     .rsvp .details-row .cell{padding:28px 20px}
     .rsvp .details-row .cell .v{font-size:18px}
-    footer{padding:48px 0 36px}
-    footer .row{justify-content:center;text-align:center;gap:16px;font-size:9px;letter-spacing:0.25em}
-    footer .mark{font-size:18px}
+    footer{padding:48px 0 40px}
+    footer .row{flex-direction:column;justify-content:center;text-align:center;gap:20px;font-size:9px;letter-spacing:0.25em;line-height:1.7}
+    footer .footer-logos{justify-content:center;gap:14px}
+    footer .footer-logos img{height:26px}
+    footer .footer-logos .footer-logo2{height:34px}
+    footer .footer-logos .nav-divider{height:26px}
     .section-num{margin-bottom:28px;font-size:9px;letter-spacing:0.35em}
     .section-num::after,.countdown .section-num::before{display:none}
   }
@@ -1126,15 +1261,20 @@
   <section class="hero">
     <div class="hero-content">
       <div class="eyebrow">Sterling Automobiles · Sub-brand Reveal</div>
-      <h1 class="wordmark">An Electric<br><em>Beginning.</em></h1>
-      <p class="tagline">The next chapter in smart, sustainable mobility&nbsp;— revealed under one roof, for one night only.</p>
+      <h1 class="wordmark">Unveiling the<br><em>Future of Mobility.</em></h1>
+      <p class="tagline">A new era of electric mobility unfolds under one roof, for one exclusive night.</p>
 
       <div class="meta-row">
         <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong><span class="tz">GMT+5:30 · Sri Lanka</span></div>
         <div class="cell">Where<strong>Havelock City Mall, Colombo</strong></div>
-        <div class="cell">Attire<strong>Smart Evening</strong></div>
       </div>
     </div>
+    <a class="scroll-cue" href="#countdown" aria-label="Scroll down">
+      <span class="scroll-cue-text">Scroll Down</span>
+      <svg class="scroll-cue-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 2 V13"/><path d="M3.5 8.5 L8 13 L12.5 8.5"/>
+      </svg>
+    </a>
   </section>
 
   <!-- COUNTDOWN -->
@@ -1159,21 +1299,35 @@
   <!-- ABOUT -->
   <section class="about">
     <div class="container">
-      <div class="section-num reveal"><span>02</span><span>The Reveal</span></div>
-      <h2 class="section-title reveal d1">A new <em>sub-brand.</em><br>A new <em>silhouette.</em></h2>
+      <div class="about-head">
+        <div class="about-head-text">
+          <div class="section-num reveal"><span>02</span><span>The Reveal</span></div>
+          <h2 class="section-title reveal d1">A new <em>identity.</em><br>A new <em>motion.</em></h2>
+        </div>
+        <div class="about-partner about-partner-tr reveal d2">
+          <span class="partner-label">In partnership with</span>
+          <img src="Henrey-logo.png" alt="Henrey" />
+        </div>
+      </div>
 
       <div class="about-grid">
-        <p class="lead reveal d1">
-          For one evening, Havelock City Mall becomes the launchpad for what comes next in Sri Lankan mobility.
-        </p>
+        <div class="lead-col">
+          <p class="lead reveal d1">
+            For one evening, Havelock City Mall becomes the launchpad for what comes next in Sri Lankan mobility.
+          </p>
+          <div class="brand-feature about-partner reveal d2">
+            <span class="partner-label">In partnership with</span>
+            <img src="Livan-logo.png" alt="Livan" />
+          </div>
+        </div>
         <div class="body">
-          <p class="reveal d2">Sterling Automobiles invites you to the official unveiling of a new sub-brand and its first electric vehicle&nbsp;— an exclusive launch experience for media, influencers, automotive enthusiasts, and industry guests.</p>
-          <p class="reveal d3">Expect a full-bodied evening: the marque reveal, brand presentations, the launch of a new digital home, and curated moments built for the camera. This is more than a product launch&nbsp;— it is a statement of where we are headed.</p>
+          <p class="reveal d2">Sterling Automobiles invites you to an exclusive evening unveiling a bold new direction in electric mobility alongside the introduction of two globally recognized EV brands to Sri Lanka.</p>
+          <p class="reveal d3">Experience a premium launch night featuring immersive presentations, future-forward design, media moments, and a first look at what comes next in modern mobility.</p>
+          <p class="reveal d3">More than a launch, this is the beginning of a new movement.</p>
           <div class="pillstrip reveal d4">
-            <span>Smart Mobility</span>
-            <span>Sustainable</span>
-            <span>By Invitation</span>
-            <span>One Night</span>
+            <span>Future Mobility</span>
+            <span>Powered by Trust</span>
+            <span>Driven by the Future</span>
           </div>
         </div>
       </div>
@@ -1184,63 +1338,62 @@
   <section class="evening">
     <div class="container">
       <div class="section-num reveal"><span>03</span><span>The Evening</span></div>
-      <h2 class="section-title reveal d1">Seven moments,<br>one <em>night.</em></h2>
+      <h2 class="section-title reveal d1">The Night<br>Everything <em>Changes.</em></h2>
 
       <div class="programme">
         <div class="item reveal d1">
           <div class="idx">01</div>
           <div class="copy">
-            <h3>Sub-brand &amp; Vehicle Reveal</h3>
-            <p>The official unveiling — the marque, the silhouette, the technology.</p>
+            <h3>The Official Reveal</h3>
+            <p>The unveiling of a bold new mobility direction alongside two electric automotive brands entering Sri Lanka.</p>
           </div>
         </div>
         <div class="item reveal d1">
           <div class="idx">02</div>
           <div class="copy">
             <h3>Brand Presentations &amp; Entertainment</h3>
-            <p>Stories from the people behind the build, paired with live entertainment.</p>
+            <p>Stories, vision, and future-forward conversations paired with curated live entertainment.</p>
           </div>
         </div>
         <div class="item reveal d2">
           <div class="idx">03</div>
           <div class="copy">
-            <h3>New Website Launch</h3>
-            <p>A new digital home goes live the moment the curtain drops.</p>
+            <h3>Digital Launch Experience</h3>
+            <p>The official launch of a new digital platform designed for the next generation of mobility.</p>
           </div>
         </div>
         <div class="item reveal d2">
           <div class="idx">04</div>
           <div class="copy">
             <h3>Interactive Experience Zones</h3>
-            <p>Hands-on encounters with the vehicle and the world it lives in.</p>
+            <p>A closer encounter with the vehicles, technology, and the future they represent.</p>
           </div>
         </div>
         <div class="item reveal d3">
           <div class="idx">05</div>
           <div class="copy">
-            <h3>Networking</h3>
-            <p>Conversations with industry, media, and the enthusiast community.</p>
+            <h3>Networking &amp; Industry Connections</h3>
+            <p>An evening shared with media, creators, automotive enthusiasts, partners, and invited guests.</p>
           </div>
         </div>
         <div class="item reveal d3">
           <div class="idx">06</div>
           <div class="copy">
-            <h3>Photo &amp; Content Moments</h3>
-            <p>Considered set-pieces, made for the lens and the social feed.</p>
+            <h3>Moments Built for the Lens</h3>
+            <p>Immersive spaces and curated visuals designed for photography, content, and social storytelling.</p>
           </div>
         </div>
         <div class="item reveal d4">
           <div class="idx">07</div>
           <div class="copy">
             <h3>Refreshments &amp; Cocktails</h3>
-            <p>An evening menu to mark the occasion. Drive carefully.</p>
+            <p>A premium hospitality experience to close the evening in style.</p>
           </div>
         </div>
-        <div class="item reveal d4">
-          <div class="idx">★</div>
+        <div class="item item-closer reveal d4">
           <div class="copy">
-            <h3>The Moment You'll Talk About</h3>
-            <p>You'll know it when you see it. Be in the room.</p>
+            <h3>And, Above All —</h3>
+            <p>Arrive curious, leave inspired. Enjoy the evening, embrace the moment, and step into the future with us.</p>
           </div>
         </div>
       </div>
@@ -1267,7 +1420,6 @@
           <div class="row"><span class="k">Date</span><span class="v">Thu · 18 Jun 2026</span></div>
           <div class="row"><span class="k">Doors</span><span class="v">6:30 PM</span></div>
           <div class="row"><span class="k">Reveal</span><span class="v">7:00 PM</span></div>
-          <div class="row"><span class="k">Valet</span><span class="v">Available on-site</span></div>
         </div>
         <div class="tz-note">All times in Sri Lanka Standard Time · GMT+5:30</div>
         <a class="directions" href="https://www.google.com/maps/dir/?api=1&destination=Havelock+City+Mall+Colombo" target="_blank" rel="noopener">
@@ -1310,10 +1462,47 @@
   </section>
 
   <footer>
-    <div class="container row">
-      <div class="mark">STERLING</div>
-      <div>© 2026 · Sterling Automobiles Lanka (Pvt) Ltd</div>
-      <div>Electric Reveal · By Invitation</div>
+    <div class="container">
+      <div class="footer-social">
+        <div class="social-group">
+          <span class="social-name">Livan</span>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/livansl" target="_blank" rel="noopener" aria-label="Livan on Facebook">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 13.5h2.5l1-4H14V7c0-1 .5-1.5 1.5-1.5H17.5V2.1C17 2 15.7 2 14.5 2 11.5 2 10 3.8 10 7.1V9.5H7v4h3V22h4v-8.5z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/livan_srilanka/" target="_blank" rel="noopener" aria-label="Livan on Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/showcase/livan-sl/?viewAsMember=true" target="_blank" rel="noopener" aria-label="Livan on LinkedIn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2 2 0 11-.02 4 2 2 0 01.02-4zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4z"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="social-sep"></span>
+        <div class="social-group">
+          <span class="social-name">Henrey</span>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/henreysl" target="_blank" rel="noopener" aria-label="Henrey on Facebook">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 13.5h2.5l1-4H14V7c0-1 .5-1.5 1.5-1.5H17.5V2.1C17 2 15.7 2 14.5 2 11.5 2 10 3.8 10 7.1V9.5H7v4h3V22h4v-8.5z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/henrey_srilanka/" target="_blank" rel="noopener" aria-label="Henrey on Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/showcase/livan-sl/?viewAsMember=true" target="_blank" rel="noopener" aria-label="Henrey on LinkedIn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2 2 0 11-.02 4 2 2 0 01.02-4zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.5c0-1.3-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21h-4z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mark footer-logos">
+          <img src="logo.png" alt="Sterling Automobiles" />
+          <span class="nav-divider"></span>
+          <img class="footer-logo2" src="logo2.png" alt="Sterling After Care Guarantee" />
+        </div>
+        <div>© 2026 · Sterling Automobiles Lanka (Pvt) Ltd</div>
+        <div>Electric Reveal · By Invitation</div>
+      </div>
     </div>
   </footer>
 </main>
@@ -1404,6 +1593,16 @@
       observeReveals();
     }, skipDelay ? 350 : 1400);
   }
+
+  /* Fade the scroll cue out once the user starts scrolling */
+  (function scrollCueFade(){
+    const cue = document.querySelector('.scroll-cue');
+    if (!cue) return;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 120) cue.classList.add('hidden');
+      else cue.classList.remove('hidden');
+    }, { passive: true });
+  })();
 
   keyBtn.addEventListener('click', () => reveal(false));
   skipBtn.addEventListener('click', () => reveal(true));
