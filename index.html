@@ -398,7 +398,14 @@
   }
   .topnav.revealed{opacity:1}
   .topnav .mark{
-    font-family:var(--display);font-size:20px;font-weight:400;letter-spacing:0.42em;
+    display:flex;align-items:center;gap:16px;
+  }
+  .topnav .nav-logo{
+    height:26px;width:auto;object-fit:contain;
+    filter:drop-shadow(0 1px 6px rgba(0,0,0,0.5));
+  }
+  .topnav .nav-divider{
+    width:1px;height:22px;background:var(--line);
   }
   .topnav .meta{
     font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
@@ -413,7 +420,10 @@
     background:var(--spark);box-shadow:0 0 10px var(--spark);
     animation:pulse 1.6s ease-in-out infinite;
   }
-  @media (max-width:760px){.topnav .meta{gap:14px;font-size:9px;letter-spacing:0.25em}}
+  @media (max-width:760px){
+    .topnav .meta{gap:14px;font-size:9px;letter-spacing:0.25em}
+    .topnav .nav-logo{height:20px}
+  }
 
   /* ----- Hero ----- */
   .hero{
@@ -1090,7 +1100,13 @@
      TOP NAV
      ========================================================= -->
 <nav class="topnav" id="topnav">
-  <div class="mark">STERLING</div>
+  <div class="mark">
+    <img class="nav-logo" src="logo.png" alt="Sterling Automobiles" />
+    <!-- Second logo (optional): uncomment and set src when ready
+    <span class="nav-divider"></span>
+    <img class="nav-logo" src="logo2.png" alt="" />
+    -->
+  </div>
   <div class="meta">
     <span class="live">Reveal Imminent</span>
     <span>18 · 06 · 26</span>
