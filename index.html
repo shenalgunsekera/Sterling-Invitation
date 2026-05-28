@@ -1324,7 +1324,7 @@
         hour:'2-digit', minute:'2-digit'
       }).format(d);
       const el = document.getElementById('localLine');
-      el.innerHTML = `7:00 PM, 18 June 2026 in Colombo &nbsp;·&nbsp; In your timezone: <b style="color:var(--ink)">${fmt}</b> (${tz})`;
+      el.textContent = `18 June 2026 · 19:00 Colombo  ·  Your time: ${fmt} (${tz})`;
     }catch(e){}
   })();
 
