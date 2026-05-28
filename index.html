@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="logo.png" fetchpriority="high" />
 <link rel="preload" as="image" href="Car silloete.png" />
 <link rel="preload" as="image" href="Car-mobile-view.png" />
 <link rel="preload" as="image" href="Hero Section image.png" />
@@ -119,6 +120,11 @@
     margin-top:-8vh;
   }
 
+  .ign-logo{
+    width:auto;height:clamp(38px,6vw,56px);
+    object-fit:contain;
+    filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));
+  }
   .ign-eyebrow{
     font-family:var(--mono);font-size:10px;letter-spacing:0.55em;
     color:var(--ink-faint);text-transform:uppercase;
@@ -1023,7 +1029,7 @@
 
 
   <div class="ign-stack">
-    <div class="ign-eyebrow"><span class="dot"></span>Sterling Automobiles</div>
+    <img class="ign-logo" src="logo.png" alt="Sterling Automobiles" fetchpriority="high" />
     <h1 class="ign-title">The <em>Reveal</em> Awaits</h1>
 
     <button class="key-btn" id="keyBtn" aria-label="Engine start — begin the experience">
@@ -1315,7 +1321,7 @@
         hour:'2-digit', minute:'2-digit'
       }).format(d);
       const el = document.getElementById('localLine');
-      el.textContent = `18 June 2026 · 19:00 Colombo  ·  Your time: ${fmt} (${tz})`;
+      el.innerHTML = `7:00 PM, 18 June 2026 in Colombo &nbsp;·&nbsp; In your timezone: <b style="color:var(--ink)">${fmt}</b> (${tz})`;
     }catch(e){}
   })();
 
