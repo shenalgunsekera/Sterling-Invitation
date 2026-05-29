@@ -13,7 +13,8 @@
 <link rel="preload" as="image" href="Henrey-logo.png" />
 <link rel="preload" as="image" href="Car silloete.png" />
 <link rel="preload" as="image" href="Car-mobile-view.png" />
-<link rel="preload" as="image" href="Hero Section image.png" />
+<link rel="preload" as="image" href="Hero-Banner-Image2.png" />
+<link rel="preload" as="image" href="Mobile-View-hero2.png" />
 
 <style>
   :root{
@@ -135,10 +136,10 @@
     width:auto;object-fit:contain;
     filter:drop-shadow(0 2px 12px rgba(0,0,0,0.7));
   }
-  .ign-logos img:first-of-type{height:clamp(28px,3.4vw,42px)}
-  .ign-logos .ign-logo2{height:clamp(38px,4.6vw,58px)}
+  .ign-logos img:first-of-type{height:clamp(36px,4.4vw,54px)}
+  .ign-logos .ign-logo2{height:clamp(48px,6vw,74px)}
   .ign-logos .ign-logo-div{
-    width:1px;height:clamp(28px,3.4vw,42px);background:rgba(245,243,238,0.18);
+    width:1px;height:clamp(36px,4.4vw,54px);background:rgba(245,243,238,0.18);
   }
   .ign-eyebrow{
     font-family:var(--mono);font-size:10px;letter-spacing:0.55em;
@@ -414,12 +415,12 @@
     display:flex;align-items:center;justify-content:center;gap:18px;
   }
   .topnav .nav-logo{
-    height:37px;width:auto;object-fit:contain;
+    height:46px;width:auto;object-fit:contain;
     filter:drop-shadow(0 1px 6px rgba(0,0,0,0.5));
   }
-  .topnav .nav-logo2{height:51px}
+  .topnav .nav-logo2{height:62px}
   .topnav .nav-divider{
-    width:1px;height:37px;background:var(--line);
+    width:1px;height:46px;background:var(--line);
   }
   .topnav .meta{
     font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
@@ -454,14 +455,13 @@
   /* Hero background image */
   .hero::before{
     content:"";position:absolute;inset:0;
-    background:url('Hero Section image.png') center 60% / cover no-repeat;
+    background:url('Hero-Banner-Image2.png') center 45% / cover no-repeat;
     opacity:0;
     transition:opacity 2s ease 1.2s;
   }
   @media (max-width:700px){
     .hero::before{
-      background-size:cover;
-      background-position:center center;
+      background:url('Mobile-View-hero2.png') center 68% / cover no-repeat;
     }
   }
   /* Dark gradient overlay for text readability */
@@ -1124,7 +1124,7 @@
     section{padding:100px 0}
     .topnav{padding:18px 24px}
     .topnav .meta .hide-sm{display:none}
-    .hero{padding:140px 0 80px}
+    .hero{padding:120px 0 12vh;justify-content:center}
     .hero .eyebrow{margin-bottom:36px;font-size:10px;letter-spacing:0.45em}
     .hero .meta-row{gap:36px;margin-top:56px}
     .hero .meta-row .cell strong{font-size:18px}
@@ -1170,8 +1170,7 @@
     .container{padding:0 20px}
     .topnav{padding:16px 20px}
     .topnav .mark{font-size:15px;letter-spacing:0.32em}
-    .topnav .meta{font-size:8.5px;letter-spacing:0.2em;gap:10px}
-    .hero{padding:120px 0 64px}
+    .hero{padding:90px 0 15vh;justify-content:center}
     .hero .eyebrow{margin-bottom:28px;font-size:9.5px}
     .hero .tagline{margin-top:32px;padding:0 12px}
     .hero .meta-row{flex-direction:column;gap:24px;margin-top:48px}
