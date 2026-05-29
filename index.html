@@ -276,6 +276,11 @@
     0%,100%{color:rgba(245,213,140,0.85);filter:drop-shadow(0 0 4px rgba(245,213,140,0.15))}
     50%{color:rgba(255,235,180,1);filter:drop-shadow(0 0 14px rgba(255,225,160,0.6))}
   }
+  /* Button core gentle beat */
+  @keyframes corePulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.035)}
+  }
 
   .ign-hint{
     font-family:var(--mono);font-size:10px;letter-spacing:0.4em;
@@ -1214,10 +1219,11 @@
     /* Ignition */
     .ign-stack{gap:40px}
     .ign-eyebrow{font-size:9px;letter-spacing:0.35em;padding:0 20px;text-align:center}
-    .ign-title{font-size:31px;padding:0 20px}
+    .ign-title{font-size:35px;padding:0 20px}
     .ign-hint{font-size:9px;letter-spacing:0.3em;text-align:center;padding:0 20px}
     .key-btn{width:170px;height:170px}
-    .key-btn .core{width:100px;height:100px}
+    .key-btn .core{width:100px;height:100px;animation:corePulse 3s ease-in-out infinite}
+    .key-btn.turning .core{animation:none}
     .key-btn .glyph{width:52px;height:52px}
     .key-btn .glyph svg{width:32px;height:32px;animation:glyphPulse 3s ease-in-out infinite}
     .key-btn .ring{inset:29px;animation:keyPulse 3s ease-in-out 0.22s infinite}
