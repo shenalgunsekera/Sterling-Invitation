@@ -112,8 +112,7 @@
     .key-btn .ring.r2{inset:-16px}
     .key-btn .ring.r3{inset:-32px}
     .ign-hint{font-size:8.5px;letter-spacing:0.3em}
-    .skip{top:12px;right:12px;font-size:7.5px;padding:6px 10px}
-    .ign-logo{top:16px;left:18px;height:26px}
+    .ign-logos{top:20px;gap:14px}
   }
 
   /* Scan line removed per design feedback. */
@@ -128,7 +127,8 @@
 
   /* Both logos centered at the top of the ignition screen */
   .ign-logos{
-    position:absolute;top:30px;left:0;right:0;z-index:3;
+    position:absolute;top:30px;left:50%;transform:translateX(-50%);z-index:3;
+    width:max-content;max-width:90vw;
     display:flex;align-items:center;justify-content:center;gap:clamp(16px,2.5vw,28px);
   }
   .ign-logos img{
