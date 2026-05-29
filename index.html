@@ -712,11 +712,11 @@
     font-size:clamp(22px,2.6vw,34px);
     line-height:1.3;color:var(--ink);
   }
-  /* About header — title left, partner block top-right */
+  /* About header — title left, partner block aligned over body column */
   .about .about-head{
-    display:flex;align-items:center;justify-content:space-between;gap:56px;
+    display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(48px,8vw,140px);
+    align-items:center;
   }
-  .about .about-head-text{flex:1}
 
   /* Partner brand blocks — label + large centered logo */
   .about .about-partner{
@@ -733,8 +733,8 @@
   }
   .about .about-partner img:hover{transform:scale(1.05);opacity:1}
 
-  /* Partner block top-right — both logos centered under one label */
-  .about .about-partner-tr{flex-shrink:0;width:min(540px,46vw)}
+  /* Partner block — centered within the body column */
+  .about .about-partner-tr{width:100%}
   .about .partner-logos{
     display:flex;align-items:center;justify-content:center;gap:clamp(24px,3vw,48px);
   }
@@ -1125,10 +1125,9 @@
     .countdown .num{font-size:64px}
     .countdown .unit{padding:32px 10px 24px}
     .countdown .footnote{font-size:9px;letter-spacing:0.2em;line-height:1.6}
-    .about .about-head{flex-direction:column;align-items:flex-start;gap:44px}
-    .about .about-partner-tr{width:100%;align-self:center}
-    .about .partner-logos{gap:clamp(20px,6vw,40px)}
-    .about .partner-logos img{height:clamp(72px,18vw,120px)}
+    .about .about-head{grid-template-columns:1fr;gap:44px}
+    .about .partner-logos{gap:clamp(28px,7vw,48px)}
+    .about .partner-logos img{height:clamp(96px,24vw,150px)}
     .about-grid{margin-top:56px;gap:44px}
     .about-grid .lead{font-size:22px}
     .about-grid .body p{font-size:15.5px}
