@@ -126,11 +126,19 @@
     margin-top:-8vh;
   }
 
-  .ign-logo{
-    position:absolute;top:28px;left:32px;z-index:3;
-    width:auto;height:clamp(30px,4vw,44px);
-    object-fit:contain;
-    filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));
+  /* Both logos centered at the top of the ignition screen */
+  .ign-logos{
+    position:absolute;top:30px;left:0;right:0;z-index:3;
+    display:flex;align-items:center;justify-content:center;gap:clamp(16px,2.5vw,28px);
+  }
+  .ign-logos img{
+    width:auto;object-fit:contain;
+    filter:drop-shadow(0 2px 12px rgba(0,0,0,0.7));
+  }
+  .ign-logos img:first-of-type{height:clamp(28px,3.4vw,42px)}
+  .ign-logos .ign-logo2{height:clamp(38px,4.6vw,58px)}
+  .ign-logos .ign-logo-div{
+    width:1px;height:clamp(28px,3.4vw,42px);background:rgba(245,243,238,0.18);
   }
   .ign-eyebrow{
     font-family:var(--mono);font-size:10px;letter-spacing:0.55em;
@@ -394,8 +402,8 @@
   /* ----- Top nav ----- */
   .topnav{
     position:fixed;top:0;left:0;right:0;z-index:80;
-    padding:28px clamp(28px,5vw,64px);
-    display:flex;align-items:center;justify-content:space-between;
+    padding:24px clamp(28px,5vw,64px);
+    display:flex;align-items:center;justify-content:center;
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
     background:linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
@@ -403,15 +411,15 @@
   }
   .topnav.revealed{opacity:1}
   .topnav .mark{
-    display:flex;align-items:center;gap:16px;
+    display:flex;align-items:center;justify-content:center;gap:18px;
   }
   .topnav .nav-logo{
-    height:34px;width:auto;object-fit:contain;
+    height:37px;width:auto;object-fit:contain;
     filter:drop-shadow(0 1px 6px rgba(0,0,0,0.5));
   }
-  .topnav .nav-logo2{height:46px}
+  .topnav .nav-logo2{height:51px}
   .topnav .nav-divider{
-    width:1px;height:34px;background:var(--line);
+    width:1px;height:37px;background:var(--line);
   }
   .topnav .meta{
     font-family:var(--mono);font-size:10px;letter-spacing:0.35em;
@@ -427,11 +435,10 @@
     animation:pulse 1.6s ease-in-out infinite;
   }
   @media (max-width:760px){
-    .topnav .meta{gap:14px;font-size:9px;letter-spacing:0.25em}
-    .topnav .nav-logo{height:24px}
-    .topnav .nav-logo2{height:34px}
-    .topnav .nav-divider{height:26px}
-    .topnav .mark{gap:12px}
+    .topnav .nav-logo{height:26px}
+    .topnav .nav-logo2{height:37px}
+    .topnav .nav-divider{height:28px}
+    .topnav .mark{gap:14px}
   }
 
   /* ----- Hero ----- */
@@ -1244,7 +1251,11 @@
   </div>
 
 
-  <img class="ign-logo" src="logo.png" alt="Sterling Automobiles" fetchpriority="high" />
+  <div class="ign-logos">
+    <img src="logo.png" alt="Sterling Automobiles" fetchpriority="high" />
+    <span class="ign-logo-div"></span>
+    <img class="ign-logo2" src="logo2.png" alt="Sterling After Care Guarantee" fetchpriority="high" />
+  </div>
 
   <div class="ign-stack">
     <h1 class="ign-title">The <em>Reveal</em> Awaits</h1>
@@ -1267,7 +1278,6 @@
     <div class="ign-hint">Press to ignite</div>
   </div>
 </div>
-<button class="skip" id="skipBtn" aria-label="Skip intro">Skip Intro</button>
 
 <!-- =========================================================
      HEADLIGHT STAGE
@@ -1293,11 +1303,6 @@
     <span class="nav-divider"></span>
     <img class="nav-logo nav-logo2" src="logo2.png" alt="Sterling After Care Guarantee" />
   </div>
-  <div class="meta">
-    <span class="live">Reveal Imminent</span>
-    <span>18 · 06 · 26</span>
-    <span class="hide-sm">Colombo</span>
-  </div>
 </nav>
 
 <!-- =========================================================
@@ -1313,7 +1318,7 @@
       <p class="tagline">A new era of future mobility unfolds under one roof, for one exclusive night.</p>
 
       <div class="meta-row">
-        <div class="cell">When<strong>18 June 2026 · 7:00 PM</strong><span class="tz">GMT+5:30 · Sri Lanka</span></div>
+        <div class="cell">When<strong>18 June 2026 · 6:30 PM</strong><span class="tz">GMT+5:30 · Sri Lanka</span></div>
         <div class="cell">Where<strong>Havelock City Mall, Colombo</strong></div>
       </div>
     </div>
@@ -1339,7 +1344,7 @@
       </div>
 
       <p class="footnote reveal">
-        <span class="accurate">●</span>&nbsp; Synchronised to the moment of reveal&nbsp;—&nbsp;<span id="localLine">18 June 2026 · 19:00 Asia/Colombo (UTC+5:30)</span>
+        <span class="accurate">●</span>&nbsp; Synchronised to the start of the event&nbsp;—&nbsp;<span id="localLine">18 June 2026 · 6:30 PM Colombo (GMT+5:30)</span>
       </p>
     </div>
   </section>
@@ -1578,7 +1583,8 @@
      Event: 18 June 2026, 7:00 PM Asia/Colombo (UTC+5:30)
             = 18 June 2026, 13:30:00 UTC
      ============================================================ */
-  const TARGET_UTC_MS = Date.UTC(2026, 5, 18, 13, 30, 0); // month 0-indexed
+  const TARGET_UTC_MS = Date.UTC(2026, 5, 18, 13, 30, 0); // countdown -> 7:00 PM Colombo
+  const EVENT_START_UTC_MS = Date.UTC(2026, 5, 18, 13, 0, 0); // doors / start -> 6:30 PM Colombo
   const pad = n => String(n).padStart(2,'0');
 
   function tick(){
@@ -1600,14 +1606,14 @@
   /* Show local-time line for visitor in their tz, plus origin line */
   (function localLine(){
     try{
-      const d = new Date(TARGET_UTC_MS);
+      const d = new Date(EVENT_START_UTC_MS);
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'local';
       const fmt = new Intl.DateTimeFormat(undefined, {
         weekday:'short', day:'2-digit', month:'short', year:'numeric',
         hour:'2-digit', minute:'2-digit'
       }).format(d);
       const el = document.getElementById('localLine');
-      el.textContent = `18 June 2026 · 19:00 Colombo  ·  Your time: ${fmt} (${tz})`;
+      el.textContent = `18 June 2026 · 6:30 PM Colombo  ·  Your time: ${fmt} (${tz})`;
     }catch(e){}
   })();
 
@@ -1662,7 +1668,7 @@
   })();
 
   keyBtn.addEventListener('click', () => reveal(false));
-  skipBtn.addEventListener('click', () => reveal(true));
+  if (skipBtn) skipBtn.addEventListener('click', () => reveal(true));
   window.addEventListener('keydown', (e) => {
     if ((e.code === 'Space' || e.code === 'Enter') && !revealed){
       e.preventDefault();
