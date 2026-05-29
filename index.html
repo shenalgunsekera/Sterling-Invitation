@@ -88,11 +88,13 @@
     position:absolute;inset:0;
     pointer-events:none;
     display:flex;align-items:flex-end;justify-content:center;
+    overflow:hidden;
   }
   .ignition .car-image img{
-    width:100%;height:100%;display:block;
-    object-fit:cover;
-    object-position:center bottom;
+    width:100%;height:auto;display:block;
+    /* full width, never side-cropped; anchored to the bottom */
+    -webkit-mask:linear-gradient(to bottom, transparent 0, #000 10%);
+            mask:linear-gradient(to bottom, transparent 0, #000 10%);
   }
 
   @media (max-width:700px){
@@ -470,6 +472,17 @@
     display:flex;flex-direction:column;align-items:center;
     width:100%;max-width:900px;
   }
+  /* Soft blurred scrim behind hero text for readability */
+  .hero-content::before{
+    content:"";position:absolute;z-index:-1;
+    inset:-12% -10%;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    background:radial-gradient(ellipse 60% 72% at 50% 48%, rgba(5,5,5,0.6), rgba(5,5,5,0.25) 55%, transparent 78%);
+    -webkit-mask:radial-gradient(ellipse 62% 74% at 50% 48%, #000 38%, transparent 76%);
+            mask:radial-gradient(ellipse 62% 74% at 50% 48%, #000 38%, transparent 76%);
+    pointer-events:none;
+  }
   .hero .eyebrow{
     font-family:var(--mono);font-size:11px;letter-spacing:0.55em;
     color:var(--ink-soft);text-transform:uppercase;
@@ -720,20 +733,19 @@
   }
   .about .about-partner img:hover{transform:scale(1.05);opacity:1}
 
-  /* Top-right partner (Henrey) — centered in the right space */
-  .about .about-partner-tr{
-    flex-shrink:0;width:min(460px,44vw);
+  /* Partner block top-right — both logos centered under one label */
+  .about .about-partner-tr{flex-shrink:0;width:min(540px,46vw)}
+  .about .partner-logos{
+    display:flex;align-items:center;justify-content:center;gap:clamp(24px,3vw,48px);
   }
-  .about .about-partner-tr img{height:clamp(120px,14vw,190px)}
-
-  /* Left-column partner (Livan) — fills the gap, centered */
-  .about .brand-feature{
-    margin-top:48px;
-    padding-top:44px;
-    border-top:1px solid var(--line);
+  .about .partner-logos img{
+    height:clamp(90px,11vw,160px);width:auto;object-fit:contain;opacity:0.95;
+    transition:transform .5s cubic-bezier(0.16,1,0.3,1), opacity .5s ease;
   }
-  .about .brand-feature img{height:clamp(100px,11vw,160px)}
-  .about .partner-mobile-only{display:none}
+  .about .partner-logos img:hover{transform:scale(1.05);opacity:1}
+  .about .partner-logos .partner-div{
+    width:1px;height:clamp(70px,8vw,110px);background:var(--line);flex-shrink:0;
+  }
   .about-grid .body p{
     font-size:17.5px;line-height:1.78;color:var(--ink-soft);
     margin-bottom:22px;max-width:60ch;
@@ -1113,10 +1125,10 @@
     .countdown .num{font-size:64px}
     .countdown .unit{padding:32px 10px 24px}
     .countdown .footnote{font-size:9px;letter-spacing:0.2em;line-height:1.6}
-    .about .about-partner-tr{display:none}
-    .about .partner-mobile-only{display:flex}
-    .about .brand-feature{display:flex;flex-direction:column;gap:48px}
-    .about .brand-feature img{height:clamp(90px,20vw,150px)}
+    .about .about-head{flex-direction:column;align-items:flex-start;gap:44px}
+    .about .about-partner-tr{width:100%;align-self:center}
+    .about .partner-logos{gap:clamp(20px,6vw,40px)}
+    .about .partner-logos img{height:clamp(72px,18vw,120px)}
     .about-grid{margin-top:56px;gap:44px}
     .about-grid .lead{font-size:22px}
     .about-grid .body p{font-size:15.5px}
@@ -1318,7 +1330,7 @@
   <section class="countdown" id="countdown">
     <div class="container">
       <div class="section-num reveal"><span>01</span><span>Time to Ignition</span></div>
-      <h2 class="section-title reveal d1">The clock<br>is <em>running.</em></h2>
+      <h2 class="section-title reveal d1">The clock<br>is <em>ticking.</em></h2>
 
       <div class="timer">
         <div class="unit reveal d1"><div class="num" id="d">--</div><div class="label">Days</div></div>
@@ -1343,7 +1355,11 @@
         </div>
         <div class="about-partner about-partner-tr reveal d2">
           <span class="partner-label">In partnership with</span>
-          <img src="Henrey-logo.png" alt="Henrey" />
+          <div class="partner-logos">
+            <img src="Livan-logo.png" alt="Livan" />
+            <span class="partner-div"></span>
+            <img src="Henrey-logo.png" alt="Henrey" />
+          </div>
         </div>
       </div>
 
@@ -1352,16 +1368,6 @@
           <p class="lead reveal d1">
             For one evening, Havelock City Mall becomes the launchpad for what comes next in Sri Lankan mobility.
           </p>
-          <div class="brand-feature reveal d2">
-            <div class="about-partner">
-              <span class="partner-label">In partnership with</span>
-              <img src="Livan-logo.png" alt="Livan" />
-            </div>
-            <div class="about-partner partner-mobile-only">
-              <span class="partner-label">In partnership with</span>
-              <img src="Henrey-logo.png" alt="Henrey" />
-            </div>
-          </div>
         </div>
         <div class="body">
           <p class="reveal d2">Sterling Automobiles invites you to an exclusive evening unveiling a bold new direction in future mobility alongside the introduction of two globally recognized EV brands to Sri Lanka.</p>
