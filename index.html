@@ -266,6 +266,12 @@
   .key-btn.turning .glyph{color:rgba(255,240,190,1)}
   .key-btn.turning .glyph svg{filter:drop-shadow(0 0 18px rgba(255,225,160,0.9))}
 
+  /* Subtle breathing pulse for the start button (applied on mobile) */
+  @keyframes keyPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(245,213,140,0); border-color:rgba(245,243,238,0.12)}
+    50%{box-shadow:0 0 26px 3px rgba(245,213,140,0.16); border-color:rgba(245,213,140,0.3)}
+  }
+
   .ign-hint{
     font-family:var(--mono);font-size:10px;letter-spacing:0.4em;
     color:var(--ink-faint);text-transform:uppercase;
@@ -1203,12 +1209,13 @@
     /* Ignition */
     .ign-stack{gap:40px}
     .ign-eyebrow{font-size:9px;letter-spacing:0.35em;padding:0 20px;text-align:center}
-    .ign-title{font-size:26px;padding:0 20px}
+    .ign-title{font-size:31px;padding:0 20px}
     .ign-hint{font-size:9px;letter-spacing:0.3em;text-align:center;padding:0 20px}
     .key-btn{width:170px;height:170px}
     .key-btn .core{width:100px;height:100px}
     .key-btn .glyph{width:52px;height:52px}
     .key-btn .glyph svg{width:32px;height:32px}
+    .key-btn .ring{animation:keyPulse 2.8s ease-in-out infinite}
     .key-btn .ring.r2{inset:-18px}
     .key-btn .ring.r3{inset:-36px}
     .ignition .car-image{width:100vw}
