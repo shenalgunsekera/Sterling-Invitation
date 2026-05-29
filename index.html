@@ -85,11 +85,11 @@
   /* Faint car silhouette emerging from the dark behind the key */
   /* Car image — full bleed, covers entire ignition background */
   .ignition .car-image{
-    position:absolute;inset:0;
+    position:absolute;left:0;right:0;bottom:0;
     pointer-events:none;
-    display:flex;align-items:flex-end;justify-content:center;
     overflow:hidden;
   }
+  .ignition .car-image picture{display:block;width:100%}
   .ignition .car-image img{
     width:100%;height:auto;display:block;
     /* full width, never side-cropped; anchored to the bottom */
