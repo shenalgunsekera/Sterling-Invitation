@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Sterling · Electric Reveal — 18 June 2026</title>
+<title>Sterling · The Future Of Mobility — 18 June 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
@@ -1944,14 +1944,14 @@
     const ics = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//Sterling//Electric Reveal//EN',
+      'PRODID:-//Sterling//The Future Of Mobility//EN',
       'BEGIN:VEVENT',
       'UID:' + Date.now() + '@sterling.lk',
       'DTSTAMP:' + start,
       'DTSTART:' + start,
       'DTEND:' + end,
-      'SUMMARY:Sterling — Electric Reveal',
-      'DESCRIPTION:An exclusive launch of a new sub-brand and electric mobility innovation by Sterling Automobiles Lanka.',
+      'SUMMARY:Sterling — The Future Of Mobility',
+      'DESCRIPTION:An exclusive launch of a new sub-brand and future mobility innovation by Sterling Automobiles Lanka.',
       'LOCATION:Havelock City Mall, Colombo, Sri Lanka',
       'END:VEVENT',
       'END:VCALENDAR'
@@ -1959,7 +1959,7 @@
     const blob = new Blob([ics], { type: 'text/calendar' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = 'sterling-electric-reveal.ics';
+    a.href = url; a.download = 'sterling-the-future-of-mobility.ics';
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
   });
