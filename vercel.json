@@ -1,6 +1,4 @@
 {
-  "trailingSlash": false,
-  "cleanUrls": true,
   "redirects": [
     { "source": "/", "destination": "/invitation", "permanent": false }
   ],
