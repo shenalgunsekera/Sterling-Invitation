@@ -568,6 +568,8 @@
     font-size:clamp(14px,1.5vw,18px);
     color:var(--ink-soft);letter-spacing:0.015em;line-height:1.5;
     max-width:640px;
+    opacity:0;transform:translateY(12px);
+    transition:opacity 1.3s ease 2.7s, transform 1.3s ease 2.7s;
   }
   .hero .hero-note em{color:var(--ink);font-style:italic}
   .hero .scroll-hint{display:none}
@@ -605,6 +607,7 @@
   main.revealed .hero .wordmark,
   main.revealed .hero .tagline,
   main.revealed .hero .meta-row,
+  main.revealed .hero .hero-note,
   main.revealed .hero .scroll-hint,
   main.revealed .hero .vehicle-frame{
     opacity:1;transform:translateY(0);filter:blur(0);
